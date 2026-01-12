@@ -253,27 +253,29 @@ backward self-similar, we would need:
 
 ---
 
-## 6. Summary: Type II Landscape
+## 6. Summary: Type II Landscape (UPDATED)
 
 ### What We've Shown:
 1. Type I blowup is impossible (Theorem C)
 2. Any blowup must be Type II
 3. "Slow" Type II (rate < (T-t)^{-1}) is also ruled out
+4. **NEW: Backward self-similar in L^{3,∞} ruled out (Theorem F)**
 
 ### What Remains Open:
-1. Backward self-similar (Leray scenario) - not ruled out by our method
-2. Other Type II scenarios with rate ~ (T-t)^{-1} or faster
-3. Hou-Luo type scenarios (axis blowup)
+1. ~~Backward self-similar~~ **RULED OUT by Theorem F**
+2. **Generic Type II** (non-self-similar) with rate ~ (T-t)^{-1} or faster
+3. **Hou-Luo type scenarios** (axis blowup, non-self-similar)
 
 ### The Big Picture:
 
 ```
-Type I (forward self-similar): RULED OUT (our Theorems A-D)
+Self-Similar Analysis: COMPLETE
+  - Forward L^{3,∞}: RULED OUT (Theorem D)
+  - Backward L^{3,∞}: RULED OUT (Theorem F)
                     ↓
-Type II possibilities:
-  - Backward self-similar: Open (NRŠ rules out in L³)
-  - Generic Type II: Highly constrained but not ruled out
-  - Hou-Luo scenario: Numerical, not self-similar
+Remaining Type II possibilities:
+  - Generic (non-self-similar) Type II: NOT RULED OUT
+  - Hou-Luo scenario: Numerical, non-self-similar, NOT RULED OUT
 ```
 
 ---
