@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-01-11: Theorem IMPROVED (Iteration 2)
+
+### Major Improvement
+- Applied Sturm-Liouville theory to axis ODE
+- Condition improved from ||a'||_∞ < 1/4 to ||a'||_∞ < 1/2 (factor of 2!)
+
+### New Files
+- sturm-liouville-proof.md: Rigorous SL proof
+- refined-theorem.md: Analysis of improvements
+- vorticity-constraints.md: Constraints from vorticity equation
+
+### Updated Theorem
+**Theorem 3.3 (Improved):** If ||a'||_∞ < 1/2, then g ≡ 0 and Γ ≡ 0.
+
+The SL method uses the ODE structure directly, avoiding the suboptimal
+Cauchy-Schwarz estimate from the energy method.
+
+---
+
 ## 2026-01-11: Theorem Complete (Iteration 1)
 
 ### Major Correction
