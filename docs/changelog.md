@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-01-12: COMPUTATIONAL TOOLKIT IMPLEMENTED
+
+### New Python Toolkit for Type II Window Analysis
+
+Built a complete computational toolkit in `src/` to attack the [3/5, 3/4) window:
+
+| Module | Purpose |
+|--------|---------|
+| `simulator/spectral_ns.py` | Pseudo-spectral 3D NS solver with RK4 |
+| `simulator/initial_conditions.py` | Taylor-Green, Kida, anti-parallel vortex tubes |
+| `simulator/rescaling.py` | Type II self-similar rescaling U(τ,y) |
+| `analysis/blowup_detector.py` | Track ||u||_∞, ||ω||_∞, BKM integral |
+| `analysis/rate_tracker.py` | Fit blowup rate α, classify Type I/II |
+| `symbolic/identity_search.py` | SymPy-based identity derivation |
+| `rigorous/intervals.py` | Interval arithmetic for proofs |
+| `visualization/rate_plots.py` | Rate plots with Type II window |
+
+### Test Results
+- Spectral solver verified (energy decays correctly)
+- Rate tracker classifies blowup types
+- Symbolic search finds: Energy (monotone), Enstrophy/Helicity (non-monotone)
+- Kida vortex shows vorticity growth (7.7 → 29.4 at ν=0.01)
+
+### Usage
+```bash
+cd navier-stokes-research
+source .venv/bin/activate
+jupyter notebook notebooks/01_spectral_solver_demo.ipynb
+```
+
+---
+
 ## 2026-01-12: TYPE II ANALYSIS COMPLETE - Iteration 9
 
 ### Final Assessment: The Gap Is Fundamental
