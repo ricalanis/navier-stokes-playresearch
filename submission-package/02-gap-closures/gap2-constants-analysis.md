@@ -1,8 +1,25 @@
 # Gap 2: Rigorous Analysis of Implicit Constants in Scaling Relations
 
 **Date:** January 13, 2026
-**Status:** CRITICAL GAP ANALYSIS
+**Status:** CRITICAL GAP — KNOWN ISSUE IDENTIFIED
 **Objective:** Prove (or identify obstructions to proving) that C(t) = O(1) in scaling relations
+
+---
+
+## ⚠️ CRITICAL CAVEAT (Added after independent review)
+
+**A significant issue has been identified with this analysis.**
+
+The boundary flux term in the local energy inequality scales as:
+```
+(1/L) × ||u||³_{L³(B_{2L})} ~ (T-t)^{1-2α}
+```
+
+For α ∈ (1/2, 3/5), the exponent 1-2α is **NEGATIVE**, meaning this term **DIVERGES** as t → T.
+
+The claim in Section 4.4 that "vanishing terms vanish" may be incorrect. See Section 12 (NEW) for proposed resolutions.
+
+---
 
 ---
 
@@ -11,9 +28,9 @@
 ### 1.1 The Gap
 
 For Type II blowup with rate alpha in (1/2, 3/5), we have shown scaling exponents are positive:
-- theta_A = 2 - m(1+alpha) > 0
-- theta_E = (3 - alpha - m(1+alpha))/2 > 0
-- theta_D = (5 - alpha - 2m(1+alpha))/2 > 0
+- theta_A = 2 - alpha - m(1+alpha) > 0  [CORRECTED FORMULA]
+- theta_E = (3 - 3*alpha - m - m*alpha)/2 > 0  [CORRECTED FORMULA]
+- theta_D = 3 - 2*alpha - m(1+alpha) > 0  [CORRECTED FORMULA]
 
 The scaling relation takes the form:
 
@@ -775,6 +792,64 @@ sup_{0<r<1} A_{m_1}(r) <= C_* * sup_{t<T} (T-t)^{theta_A} <= C_* (since theta_A 
 ```
 
 Combined with analogous results for E_m and D_m, condition (1.4) would be satisfied.
+
+---
+
+## 12. Critical Issue: Boundary Flux Divergence (NEW)
+
+### 12.1 The Problem Identified
+
+Independent review has identified that the boundary flux term in the local energy inequality:
+
+```
+∫_{Q_L} (|u|² + 2p)(u · ∇φ) dz
+```
+
+scales as (T-t)^{1-2α} in the annulus B_{2L} \ B_L where ∇φ is supported.
+
+**For α > 1/2:** The exponent 1-2α < 0, so this term **DIVERGES**.
+
+### 12.2 Why This Matters
+
+The argument in Section 4.4 claims these terms are "vanishing." This is incorrect for α ∈ (1/2, 3/5).
+
+If the boundary flux diverges, then C(t) in the scaling relation A_{m₁}(L) = C(t) × (T-t)^{θ_A} may grow as (T-t)^{2α-1}, potentially canceling the positive exponent θ_A.
+
+### 12.3 Proposed Resolutions
+
+**Option A: Stronger Concentration Assumption**
+
+Prove that Type II concentration structure forces:
+```
+||u||³_{L³(B_{2L} \ B_L)} ≪ ||u||³_{L³(B_L)} × (decay factor)
+```
+This requires showing the velocity profile decays rapidly outside the concentration ball.
+
+**Option B: Modified Localization**
+
+Use a different cutoff function strategy:
+- Cutoff supported entirely inside B_L
+- Avoid boundary terms entirely
+- Requires different local energy inequality formulation
+
+**Option C: Profile Decomposition Approach**
+
+Bypass the local energy inequality entirely by using:
+- Bahouri-Gerard profile decomposition
+- Concentration-compactness (Lions)
+- Gallagher-Koch-Planchon convergence to ancient solutions
+
+This approach (detailed in Gap 6, Part 11) avoids boundary flux issues.
+
+**Option D: Accept Partial Result**
+
+Acknowledge that Gap 2 is only closed for α close to 1/2 where 1-2α ≈ 0. The argument strengthens as α → 1/2.
+
+### 12.4 Current Status
+
+**Gap 2 remains OPEN** pending resolution of the boundary flux issue.
+
+The recommended path forward is **Option C** (profile decomposition), which provides an alternative route to Seregin's condition (1.4) without requiring Gap 2's local energy argument.
 
 ---
 
