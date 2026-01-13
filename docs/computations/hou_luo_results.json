@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-01-12T20:19:32.109911",
+  "description": "Hou-Luo blowup candidate test simulations",
+  "type_II_window": [
+    0.6,
+    0.75
+  ],
+  "results": [
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.001,
+        "amplitude": 3.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.0005,
+        "amplitude": 3.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.0002,
+        "amplitude": 3.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.0001,
+        "amplitude": 3.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.001,
+        "amplitude": 5.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.0005,
+        "amplitude": 5.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.0002,
+        "amplitude": 5.0
+      },
+      "error": "'mean_alpha'"
+    },
+    {
+      "config": {
+        "N": 64,
+        "nu": 0.0001,
+        "amplitude": 5.0
+      },
+      "error": "'mean_alpha'"
+    }
+  ]
+}

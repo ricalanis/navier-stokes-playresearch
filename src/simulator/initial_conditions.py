@@ -207,6 +207,188 @@ def anti_parallel_vortex_tubes(N: int = 64, L: float = 2*np.pi, amplitude: float
     return velocity_to_vorticity_spectral(u, v, w, L)
 
 
+def hou_luo_candidate(N: int = 64, L: float = 2*np.pi, amplitude: float = 1.0,
+                      r0: float = 0.9, delta: float = 0.1,
+                      mode: str = 'full') -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Hou-Luo blowup candidate initial condition.
+
+    Based on Luo & Hou (2014) "Potentially singular solutions of the 3D
+    axisymmetric Euler equations" (PNAS). This axisymmetric initial condition
+    was shown numerically to develop a potential singularity for 3D Euler
+    at a point on the symmetry axis.
+
+    Key features of the Hou-Luo scenario:
+    - Axisymmetric flow with swirl (angular velocity u_theta)
+    - Angular vorticity omega_theta concentrated near outer boundary
+    - Odd symmetry in z: omega_1 = omega_theta/r ~ sin^2(z) at r = r0
+    - Vortex stretching amplification mechanism near the axis
+
+    For Navier-Stokes with small viscosity, this is a candidate for
+    approaching blowup behavior before viscous regularization.
+
+    In cylindrical coordinates (r, theta, z), the Hou-Luo IC has:
+    - u_theta(r,z) = A * f(r) * sin^2(pi*z/L)
+    - f(r) peaks near r = r0 (outer region) and vanishes at r = 0
+    - omega_theta = d(r*u_theta)/dr / r has specific radial structure
+
+    Args:
+        N: Grid resolution per dimension
+        L: Domain size [0, L]^3 (periodic cube approximating cylinder)
+        amplitude: Amplitude of the initial velocity
+        r0: Radial location of peak angular velocity (fraction of L/2)
+        delta: Width of the radial profile
+        mode: 'full' for complete 3D, 'simplified' for faster testing
+
+    Returns:
+        Vorticity in spectral space (omega_x_hat, omega_y_hat, omega_z_hat)
+
+    References:
+        - Luo, G., Hou, T.Y. "Potentially singular solutions of the 3D
+          axisymmetric Euler equations" PNAS 111(36), 2014
+        - Luo, G., Hou, T.Y. "Toward the finite-time blowup of the 3D
+          axisymmetric Euler equations" SIAM Multiscale Model. Simul. 2014
+    """
+    x = np.linspace(0, L, N, endpoint=False)
+    X, Y, Z = np.meshgrid(x, x, x, indexing='ij')
+
+    # Center domain for cylindrical coordinates
+    X_c = X - L/2
+    Y_c = Y - L/2
+    Z_c = Z - L/2  # Center z as well
+
+    # Cylindrical r (distance from z-axis)
+    r = np.sqrt(X_c**2 + Y_c**2)
+    r_safe = np.maximum(r, 1e-10)  # Avoid division by zero
+
+    # Azimuthal angle theta
+    theta = np.arctan2(Y_c, X_c)
+
+    # Radial profile f(r) - peaks at r0*L/2, vanishes at r=0 and large r
+    # Using a smooth bump function: r^2 * exp(-(r - r0*L/2)^2 / (2*delta^2*L^2/4))
+    r_peak = r0 * L / 2
+    sigma_r = delta * L / 2
+
+    # f(r) = r^2 * exp(-((r - r_peak)^2)/(2*sigma_r^2)) for smooth approach to axis
+    # This ensures u_theta ~ r near r=0 (solid body rotation), peaks at r_peak
+    f_r = (r**2 / (r_peak**2 + 1e-10)) * np.exp(-((r - r_peak)**2) / (2 * sigma_r**2))
+
+    # z-profile: sin^2(pi*z/L) with odd symmetry centered at z=L/2
+    # Map to centered coordinate: use sin^2(pi*(Z - L/2)/L) = sin^2(pi*Z_c/L)
+    # For odd symmetry we use sin(2*pi*Z_c/L) component
+    g_z = np.sin(2 * np.pi * Z_c / L)**2
+
+    # Hou-Luo also has specific z-monotonicity. Add asymmetric perturbation
+    # to break reflection symmetry and promote one-sided concentration
+    h_z = np.sin(np.pi * Z_c / L)  # Odd in z
+
+    if mode == 'simplified':
+        # Simplified version: basic axisymmetric swirl flow
+        # u_theta = A * f(r) * g(z)
+        u_theta = amplitude * f_r * g_z
+
+        # Axial velocity: small perturbation to trigger dynamics
+        u_z = 0.1 * amplitude * f_r * h_z
+
+    else:  # 'full' mode
+        # Full Hou-Luo inspired IC with stronger angular vorticity concentration
+        #
+        # The key mechanism in Hou-Luo is that omega_1 = omega_theta/r
+        # at the boundary drives u_1 = u_theta/r through the Biot-Savart law
+        #
+        # omega_theta = (1/r) * d(r*u_theta)/dr - du_z/dz
+        #
+        # We design u_theta to have strong gradient near the axis
+
+        # Radial profile that creates intense omega_theta/r near axis
+        # Use r * (1 - r/r_max)^2 * exp(...) type profile
+        r_max = 0.95 * L / 2
+        f_r_hou = (r / r_peak) * np.maximum(1 - r / r_max, 0)**2 * \
+                  np.exp(-((r - r_peak)**2) / (2 * sigma_r**2))
+
+        # Angular velocity with Hou-Luo type z-dependence
+        # The sin^2 creates nodes at z = 0, L/2, L
+        u_theta = amplitude * f_r_hou * g_z
+
+        # Add swirl perturbation to break azimuthal symmetry slightly
+        # (In pure axisymmetric, this would be zero, but we're on a Cartesian grid)
+        swirl_perturb = 0.05 * amplitude * np.sin(2 * theta) * f_r_hou * g_z
+        u_theta += swirl_perturb
+
+        # Axial velocity - computed to enhance vortex stretching
+        # Near the axis, u_z > 0 for z > 0 and u_z < 0 for z < 0
+        # This creates convergent flow that amplifies omega_theta/r
+
+        # Stream function approach: psi(r,z) such that
+        # u_r = -(1/r) * dpsi/dz, u_z = (1/r) * dpsi/dr
+        # For our purpose, a simpler direct specification:
+        u_z_profile = 0.2 * amplitude * (1 - (r / (L/2))**2) * h_z
+        u_z = u_z_profile * np.exp(-r**2 / (r_peak**2))
+
+        # Radial velocity for incompressibility (approximate)
+        # div(u) = 0 in cylindrical: (1/r)*d(r*u_r)/dr + du_z/dz = 0
+        # For axisymmetric: du_r/dr + u_r/r + du_z/dz = 0
+        # We'll let the spectral solver handle projection to div-free
+        u_r = np.zeros_like(X)
+
+    # Convert from cylindrical (u_r, u_theta, u_z) to Cartesian (u, v, w)
+    # u = u_r * cos(theta) - u_theta * sin(theta)
+    # v = u_r * sin(theta) + u_theta * cos(theta)
+    # w = u_z
+
+    if mode == 'simplified':
+        u_r = np.zeros_like(X)
+        u = u_r * np.cos(theta) - u_theta * np.sin(theta)
+        v = u_r * np.sin(theta) + u_theta * np.cos(theta)
+        w = u_z
+    else:
+        u = u_r * np.cos(theta) - u_theta * np.sin(theta)
+        v = u_r * np.sin(theta) + u_theta * np.cos(theta)
+        w = u_z
+
+    # Project to divergence-free and return vorticity
+    return velocity_to_vorticity_spectral_projected(u, v, w, L)
+
+
+def velocity_to_vorticity_spectral_projected(u: np.ndarray, v: np.ndarray, w: np.ndarray,
+                                              L: float) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Convert velocity to vorticity in spectral space with Leray projection.
+
+    First projects velocity to divergence-free, then computes vorticity.
+    This ensures exact incompressibility for initial conditions constructed
+    in physical space (like Hou-Luo).
+    """
+    N = u.shape[0]
+    k = fftfreq(N, d=L/(2*np.pi*N))
+    kx, ky, kz = np.meshgrid(k, k, k, indexing='ij')
+    k_sq = kx**2 + ky**2 + kz**2
+    k_sq[0, 0, 0] = 1.0  # Avoid division by zero
+
+    u_hat = fftn(u)
+    v_hat = fftn(v)
+    w_hat = fftn(w)
+
+    # Leray projection: P = I - k⊗k/|k|²
+    # Remove divergent part
+    div = (kx * u_hat + ky * v_hat + kz * w_hat) / k_sq
+    u_hat_proj = u_hat - kx * div
+    v_hat_proj = v_hat - ky * div
+    w_hat_proj = w_hat - kz * div
+
+    # Zero mean
+    u_hat_proj[0, 0, 0] = 0
+    v_hat_proj[0, 0, 0] = 0
+    w_hat_proj[0, 0, 0] = 0
+
+    # Compute vorticity: omega = curl(u)
+    omega_x_hat = 1j * (ky * w_hat_proj - kz * v_hat_proj)
+    omega_y_hat = 1j * (kz * u_hat_proj - kx * w_hat_proj)
+    omega_z_hat = 1j * (kx * v_hat_proj - ky * u_hat_proj)
+
+    return omega_x_hat, omega_y_hat, omega_z_hat
+
+
 def velocity_to_vorticity_spectral(u: np.ndarray, v: np.ndarray, w: np.ndarray,
                                    L: float) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Convert velocity to vorticity in spectral space."""
