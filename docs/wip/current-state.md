@@ -42,7 +42,24 @@ Before the Millennium Prize claim is validated:
 | gap5-boundary-analysis.md | α = 3/5 exclusion |
 | gap6-cascade-analysis.md | Cascade satisfies (1.4) |
 | PROOF-STATUS-FINAL.md | Combined summary |
-| paper-type-II.md (UPDATED) | Main paper with claimed results |
+| **exponent-reconciliation.md** | Resolution of θ_A formula discrepancy |
+| **epsilon-delta-proofs.md** | Rigorous proofs for Gaps 3, 5, 6 |
+| **unified-exponent-table.md** | Complete numerical verification |
+| paper-type-II.md (UPDATED) | Main paper with claimed results + verification appendices |
+| VERIFICATION-CHECKLIST.md | Master verification checklist for external reviewers |
+
+### Key Technical Corrections Made
+
+1. **Exponent Formula Reconciliation:**
+   - Gap 2 used incorrect gradient scaling: ||∇u||² ~ ||u||² × L² (wrong)
+   - Correct scaling: ||∇u||² ~ ||u||² × L
+   - Conservative formula: θ_A = 2 - α - m(1+α) (accounts for maximum dissipation)
+   - Both formulas give positive exponents, but conservative is more rigorous
+
+2. **Minimum Exponent Values at (α, m) = (0.6, 0.6):**
+   - θ_A = 0.44 > 0 ✓
+   - θ_E = 0.12 > 0 ✓ (binding constraint)
+   - θ_D = 0.84 > 0 ✓
 
 ---
 
