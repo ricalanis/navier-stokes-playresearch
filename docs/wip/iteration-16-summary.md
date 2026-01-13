@@ -158,6 +158,24 @@ The convergent evidence from four approaches is striking, but:
 
 ---
 
+## Gap Closure Progress (Updated Jan 13, 2026)
+
+| Gap | Status | Resolution |
+|-----|--------|------------|
+| Gap 2 (Implicit constants) | OPEN | Partially addressed by explicit C_0 < 60 in Gap 4 |
+| Gap 3 (All scales) | **CLOSED** | Version 2.0 with interpolation lemma + unimodality |
+| Gap 4 (Local pressure) | **CLOSED** | Version 2.0 with NS scaling symmetry argument |
+| Gap 5 (Boundary cases) | **CLOSED** | Energy-dissipation contradiction at α=3/5 |
+| Gap 6 (Cascades) | OPEN | Partial progress in Section 10 of Gap 4 analysis |
+
+**Key Gap 4 Result:** Local CZ constant C_0 is r-INDEPENDENT (Theorem 3.1 in gap4-local-pressure-analysis.md):
+```
+||p_loc||_{L^{3/2}(B_r)} <= C_0 ||u||^2_{L^3(B_{2r})}
+```
+Proof uses NS scaling symmetry: L^3 and L^{3/2} norms are scale-invariant.
+
+---
+
 ## Assessment
 
 This iteration produced significant progress:
