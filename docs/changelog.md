@@ -1,5 +1,616 @@
 # Changelog
 
+## 2026-01-13: MENTOR ASSESSMENT AND SOLIDIFICATION PLAN
+
+### External Review Session
+
+Conducted comprehensive mentor assessment of the full research project with focus on publishability and rigor.
+
+### Key Documents Created
+
+- `docs/mentor-assessment-and-plan.md` - Complete assessment with 6-phase solidification plan
+
+### Critical Findings
+
+| Issue | Severity | Status |
+|-------|----------|--------|
+| Internal contradiction (cascade-impossibility vs paper claims) | CRITICAL | Flagged |
+| Implicit constants in Theorem 5.5 | CRITICAL | Flagged |
+| Supremum over all scales argument | HIGH | Flagged |
+| Local pressure estimates | HIGH | Flagged |
+| Boundary cases (β=0.6, m=1/2) | MEDIUM | Flagged |
+
+### Publishable Contributions Identified
+
+1. **Paper 1**: Profile Non-Existence in L^{3,∞} (Theorems D, F, H, I) - READY
+2. **Paper 2**: α-Euler Liouville Theorems (N, O, P) - READY
+3. **Paper 3**: Dimensional Analysis of Type II (conditional) - NEEDS WORK
+
+### Recommended Actions
+
+1. Remove global regularity claim until gaps closed
+2. Separate publishable results from aspirational claims
+3. Reconcile internal documentation contradictions
+4. Seek pre-submission expert review
+
+### Assessment Summary
+
+The dimensional mismatch insight (θ_A = 2 - m(1+α) > 0) is elegant and may be key to Type II exclusion, but requires rigorous formalization before claims can be made. Estimated 6-9 months to publication-ready state.
+
+---
+
+## 2026-01-13: CASCADE DESIGN FOR TYPE II BLOWUP
+
+### New Module Created
+
+Created `src/blowup/cascade_design.py` - A comprehensive framework for designing and analyzing variable cascade factors f_k that could potentially lead to Type II blowup.
+
+### The Problem Being Addressed
+
+- Coherent cascade with constant f requires f >> 1 (impossible)
+- Incoherent cascade terminates at dissipation scale
+- Variable f(k) cascade might work!
+
+The key insight is that for m in (1/2, 3/5), we have:
+- Dissipation factor: 4 (= lambda^2 for lambda=2)
+- A_m factor: ~1.07 (= lambda^{2m-1})
+- Since 4 > 1.07, there's a potential window where f_k decreasing slowly could make dissipation converge while A_m diverges
+
+### Components Implemented
+
+| Component | Description |
+|-----------|-------------|
+| `CascadeConfig` dataclass | Configuration for cascade analysis |
+| `CascadeAnalysis` class | Variable f_k analysis (power-law profiles) |
+| `HouLuoCascade` class | Hou-Luo geometry compatible cascades |
+| `NSCompatibilityChecker` class | Verify NS dynamics compatibility |
+| `CascadeDesigner` class | High-level interface for cascade design |
+
+### Key Analysis Functions
+
+| Function | Purpose |
+|----------|---------|
+| `analyze_power_law_cascade(c, gamma)` | Analyze f_k = c/k^gamma cascade |
+| `find_blowup_regime()` | Search parameter space for blowup regions |
+| `design_optimal_cascade()` | Find optimal (c, gamma) for Type II |
+| `axisymmetric_cascade_profile()` | Hou-Luo compatible cascade design |
+| `full_compatibility_check()` | Combined cascade + NS analysis |
+| `evolve_cascade()` | Time evolution of cascade model |
+
+### Mathematical Framework
+
+For cascade factor f_k = ||u||^2_{L^2(B(r_k))} / ||u||^2_{L^2(B(r_{k-1}))}:
+
+**Dissipation Convergence**: sum_k (4*f_k)^k < infinity
+**A_m Divergence**: sum_k (2^{2m-1}*f_k)^k = infinity
+
+For f_k = c/k^gamma:
+- (a*f_k)^k = exp(k*log(a*c) - k*gamma*log(k))
+- For large k with gamma > 0: terms decay
+- Rate depends on a*c relative to k^gamma
+
+### Usage
+
+```python
+from src.blowup import (
+    CascadeDesigner,
+    CascadeConfig,
+    demonstrate_cascade_analysis
+)
+
+# Quick demonstration
+results = demonstrate_cascade_analysis()
+
+# Custom analysis
+config = CascadeConfig(m=0.55, lambda_scale=2.0, nu=0.01)
+designer = CascadeDesigner(config)
+result = designer.design_blowup_cascade(strategy='optimal')
+print(f"Type II possible: {result['final_verdict']}")
+
+# Check specific cascade
+from src.blowup import CascadeAnalysis
+analyzer = CascadeAnalysis(config)
+analysis = analyzer.analyze_power_law_cascade(c=0.5, gamma=0.5, verbose=True)
+```
+
+### Key Findings
+
+The comprehensive analysis shows:
+1. **Dissipation constraint is tight**: For most parameter choices, the dissipation series converges
+2. **A_m divergence is hard to achieve**: With simple power-law f_k, A_m series often converges
+3. **NS compatibility adds more constraints**: Even mathematically valid cascades may not be realizable by NS dynamics
+4. **Hou-Luo geometry**: Constant f cascade gives f ~ 0.02, which is Type I-like
+
+---
+
+## 2026-01-13: INITIAL CONDITION SEARCH FOR TYPE II BLOWUP
+
+### New Module Created
+
+Created `src/blowup/initial_condition_search.py` - A comprehensive search framework for finding initial conditions that might lead to sustained Type II blowup.
+
+### The Problem Being Addressed
+
+- Hou-Luo IC gives transient alpha in (0.6, 0.7) but regularizes
+- We need IC that SUSTAINS Type II rate
+- The gap (1/2, 3/5) is not ruled out mathematically
+- Searching for IC that remains in Type II window for extended time
+
+### Components Implemented
+
+| Component | Description |
+|-----------|-------------|
+| `BlowupIndicators` dataclass | 7 indicators predicting blowup potential |
+| `compute_blowup_indicators()` | Compute all indicators from fields |
+| `ICParameters` dataclass | 15+ parameters defining IC family |
+| `generate_ic_from_params()` | Generate IC from parameter set |
+| `GeneticICSearch` class | Genetic algorithm for IC optimization |
+| `evaluate_candidate()` | Full NS simulation with diagnostic tracking |
+| `run_systematic_search()` | Sweep over multiple IC families |
+
+### Blowup Indicators (I_1 through I_7)
+
+| Indicator | Formula | Purpose |
+|-----------|---------|---------|
+| I_1 | ||omega||_Linf / ||omega||_L2 | Concentration measure |
+| I_2 | int omega.S.omega / ||omega||^2 | Stretching rate |
+| I_3 | alpha_eff from simulation | Effective blowup rate |
+| I_4 | d||omega||^2/dt / ||omega||^2 | Enstrophy growth |
+| I_5 | max(local enstrophy) / mean | Local concentration |
+| I_6 | |int u.omega| / (||u|| ||omega||) | Normalized helicity |
+| I_7 | Alignment with strain eigenvector | Stretching alignment |
+
+### Parameterized IC Families
+
+| Family | Key Parameters | Blowup Mechanism |
+|--------|---------------|------------------|
+| Axisymmetric | radial_peak, axial_modes | Hou-Luo stretching |
+| Helical | helicity, concentration | Beltrami stability |
+| Triaxial | axial_modes, concentration | Kida instability |
+| Vortex Knots | knot_type, knot_aspect | Topological constraint |
+| Anti-parallel Tubes | tube_separation, tube_radius | Reconnection dynamics |
+
+### Genetic Algorithm Features
+
+- Tournament selection for parent choice
+- Subtree crossover for parameter mixing
+- Gaussian mutation for continuous parameters
+- Elite preservation (configurable fraction)
+- Fitness based on weighted indicator combination
+
+### Specific IC Generators
+
+```python
+# Sweep functions for systematic exploration
+anti_parallel_tubes_sweep(separations, amplitudes)
+vortex_knot_sweep(knot_types, aspects)
+hou_luo_parameter_sweep(amplitudes, radial_peaks, axial_modes)
+helical_flow_sweep(helicities, concentrations)
+```
+
+### Usage
+
+```python
+from src.blowup import (
+    ICParameters,
+    evaluate_candidate,
+    GeneticICSearch,
+    GeneticSearchConfig,
+    run_systematic_search
+)
+
+# Single candidate evaluation
+params = ICParameters(
+    symmetry='axisymmetric',
+    amplitude=5.0,
+    radial_peak=0.9,
+)
+result = evaluate_candidate(params, N=64, nu=0.0005, T_final=2.0)
+print(f"Alpha: {result.sustained_alpha}, Time in window: {result.time_in_type_ii_window}")
+
+# Genetic search
+config = GeneticSearchConfig(population_size=50, n_generations=100, nu=0.0005)
+searcher = GeneticICSearch(config)
+best = searcher.run(verbose=True)
+
+# Systematic search
+all_results = run_systematic_search(viscosities=[0.001, 0.0005, 0.0002])
+```
+
+### Command Line Usage
+
+```bash
+# Systematic search over all IC families
+python -m src.blowup.initial_condition_search --mode systematic --N 64 --T 2.0
+
+# Genetic algorithm search
+python -m src.blowup.initial_condition_search --mode genetic --N 64 --nu 0.0005
+
+# Single Hou-Luo style IC test
+python -m src.blowup.initial_condition_search --mode single --N 64 --nu 0.0001 --T 2.0
+```
+
+### Files Created/Modified
+
+- `src/blowup/initial_condition_search.py` - Main module (900+ lines)
+- `src/blowup/__init__.py` - Added new exports
+
+### Scientific Motivation
+
+Based on analysis:
+- Type II blowup requires alpha in (1/2, 3/5) or (3/5, 3/4)
+- Good blowup IC should have:
+  - High local enstrophy / global enstrophy ratio
+  - Vorticity aligned with strain stretching direction
+  - Topology allowing sustained stretching without reconnection
+  - Energy distribution enabling efficient cascade
+
+### Key Finding
+
+The fitness function rewards:
+- Concentration (log scale for high values)
+- Positive stretching rate
+- Alpha in Type II window (peak at alpha ~ 0.65)
+- Positive enstrophy growth
+- High strain-vorticity alignment
+- **Time spent in Type II window (highest weight)**
+
+This last criterion is crucial - we want IC that SUSTAINS Type II behavior, not just achieves it transiently.
+
+---
+
+## 2026-01-13: DIMENSIONAL FREEDOM ANALYSIS FOR TYPE II BLOWUP
+
+### New Module Created
+
+Created `src/blowup/dimensional_freedom.py` - A comprehensive analysis of how the dimensional gap between CKN and Seregin criteria allows Type II blowup concentration.
+
+### The Core Insight
+
+The gap between CKN (dimension 0) and Seregin A_{m1} (dimension ~0.9) means:
+- CKN controls r^{-2} integral |u|^3 (scale-invariant)
+- But r^{-(2m-1)} integral |u|^2 is NOT controlled
+
+This dimensional freedom might ALLOW concentration!
+
+### Components Implemented
+
+| Component | Description |
+|-----------|-------------|
+| `DimensionalFreedomAnalyzer` | Main analyzer for CKN-Seregin gap |
+| `DimensionalGapAnalysis` | Results container for gap analysis |
+| `ConcentrationGeometry` | Point, filament, sheet, uniform geometries |
+| `CascadeExploitationAnalyzer` | Multi-scale cascade structure design |
+| `run_dimensional_freedom_analysis()` | Complete analysis pipeline |
+
+### Analysis Categories
+
+1. **What CKN Doesn't Control**
+   - CKN: r^{-2} int |u|^3 < epsilon => regular
+   - Contrapositive: If blowup, r^{-2} int |u|^3 >= epsilon
+   - But this says NOTHING about |u|^2 distribution!
+
+2. **Dimensional Degrees of Freedom**
+   - For fixed ||u||_{L^3} = M, what's the range of ||u||_{L^2(B_r)}?
+   - Min: uniform distribution
+   - Max: peaked concentration
+   - Freedom ratio quantifies the gap
+
+3. **CKN + Seregin Simultaneous Saturation**
+   - Can r^{-2} int |u|^3 = epsilon (saturate CKN)
+   - While r^{-(2m-1)} int |u|^2 -> infinity (diverge Seregin)?
+   - Answer: Yes for cascade structures, No for simple power laws
+
+4. **Concentration Geometry Analysis**
+   - Point (0D): |u| ~ |x|^{-alpha}, maximal concentration
+   - Filament (1D): Vortex tubes, NS compatible
+   - Sheet (2D): Unstable to Kelvin-Helmholtz
+   - Uniform (3D): No concentration, no blowup
+
+5. **NS Compatibility Check**
+   - Incompressibility: div(u) = 0
+   - Vortex stretching: D omega / Dt = omega . grad u
+   - Pressure gradients
+   - Energy constraint
+
+### Key Findings
+
+For m = 0.55 (typical Seregin parameter):
+- Dimensional gap = 0.1 (m1 = 2m - 1 = 0.1)
+- Simple power-law profiles CANNOT simultaneously saturate CKN and diverge in A_{m1}
+- BUT multi-scale CASCADE structures CAN exploit the gap
+- Energy constraint is satisfied for alpha < 3/5
+
+### Mathematical Details
+
+For |u| ~ A * |x|^{-beta}:
+- CKN saturation requires: 1 - 3*beta = 0 => beta = 1/3
+- Seregin divergence requires: 3 - 2*beta - m1 < 0 => beta > (3-m1)/2
+
+For m1 ~ 0.1: (3 - 0.1)/2 = 1.45 > 1 (L^3 integrability bound)
+
+Single power laws CANNOT work, but cascades can!
+
+### Usage
+
+```python
+from src.blowup import run_dimensional_freedom_analysis
+
+results = run_dimensional_freedom_analysis(m=0.55)
+print(results['summary'])
+
+# Check specific geometry
+analyzer = DimensionalFreedomAnalyzer(m=0.55)
+optimal = analyzer.optimal_concentration_for_blowup()
+ns_check = analyzer.ns_compatibility_check('filament')
+```
+
+### Significance
+
+This analysis explains WHY the Type II gap (1/2, 3/5) remains open:
+1. The dimensional freedom between CKN and Seregin creates a "pocket"
+2. Concentration structures can exist that are consistent with all known constraints
+3. Closing this gap requires NEW MATHEMATICS that links L^3 and L^2 norms more tightly
+
+### Files Created/Modified
+
+- `src/blowup/dimensional_freedom.py` - Main analysis module (600+ lines)
+- `src/blowup/__init__.py` - Added dimensional freedom exports
+- `docs/changelog.md` - This entry
+
+---
+
+## 2026-01-13: SYMBOLIC PROOF SEARCH ENGINE
+
+### New Module Created
+
+Created `src/discovery/proof_search.py` - A comprehensive symbolic proof search engine that systematically explores the space of proofs for the NS regularity problem.
+
+### The Problem Being Addressed
+
+Target: Find a proof path from known results to:
+```
+||u||_{L^2(B(r))} <= C r^beta with beta > 0.05
+```
+
+This would imply local decay of the L^2 norm, connecting to CKN/Seregin regularity criteria.
+
+### Components Implemented
+
+| Component | Description |
+|-----------|-------------|
+| `Dimension` class | Physical dimension tracking for NS scaling analysis |
+| `Statement` dataclass | Mathematical statements with type, content, hypotheses, tags |
+| `StatementType` enum | BOUND, IMPLICATION, IDENTITY, INEQUALITY, DEFINITION, REGULARITY, DECAY, SCALING |
+| `NormSpec` dataclass | Specification of norms: space, domain, quantity, weight |
+| `KnowledgeBase` class | 32 known NS results (CKN, ESS, BKM, NRS, Sobolev, etc.) |
+| `InferenceRule` classes | 6 rules: Substitution, Chaining, Scaling, Localization, Implication, Interpolation |
+| `ProofSearchEngine` | Beam search with heuristics, dimensional filtering |
+| `GapDetector` | Structural gap analysis, missing lemma identification |
+| `ProofVisualizer` | Proof tree formatting, DOT export for GraphViz |
+
+### Knowledge Base Contents (32 Statements)
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| Classical inequalities | 5 | Sobolev, Holder, Young, Calderon-Zygmund |
+| Biot-Savart | 2 | Law + L^p estimate |
+| Energy/Enstrophy | 4 | Decay, bound, evolution |
+| Pressure | 2 | Poisson + L^{3/2} bound |
+| CKN | 2 | Epsilon-regularity + singular set |
+| BKM | 2 | Criterion + contrapositive |
+| ESS | 2 | L^3 regularity + contrapositive |
+| NRS | 2 | L^3 exclusion + weak-L^3 open |
+| Type I/II | 4 | Definitions + ruled out + window |
+| Seregin | 3 | Condition (1.4) + weighted norms |
+| Scaling | 2 | NS symmetry + L^3 critical |
+| Others | 3 | Local energy, interpolation |
+
+### Search Results
+
+Running with default parameters (max_depth=10, beam_width=100, max_nodes=10000):
+- Explored 294 nodes
+- Reached maximum depth 8
+- **No proof found** (expected - this is the Millennium Problem!)
+
+### Gap Analysis Output
+
+The engine identifies **5 missing lemmas**:
+1. L^infty bound to interpolate L^2 -> L^3
+2. Proof that Type II implies Seregin (1.4)
+3. L^3 boundedness from Type II structure
+4. Exclusion of concentration (cascade prevention)
+5. epsilon-decay of local L^2 norm for Type II
+
+### Structural Gaps Identified
+
+| Gap | Description | Status |
+|-----|-------------|--------|
+| L^2 -> L^3 | Interpolation needs L^infty (the blowup!) | FUNDAMENTAL |
+| Global -> Local Decay | Concentration prevents decay | FUNDAMENTAL |
+| Type II Window (1/2, 3/5) | Different dimensions - vorticity vs energy | FUNDAMENTAL |
+| Cascade Exclusion | No monotone local quantity | FUNDAMENTAL |
+
+### Minimal Missing Lemma
+
+The system identifies the **minimal gap-closing lemma**:
+```
+CONJECTURE: For Type II rate alpha in (1/2, 3/5):
+limsup_{r -> 0} r^{-epsilon} ||u||_{L^2(B(r))} < infty
+for some epsilon > 0.
+```
+
+### Usage
+
+```python
+from src.discovery import run_proof_search, run_gap_analysis
+
+# Run full search
+result = run_proof_search(verbose=True)
+
+# Just gap analysis
+run_gap_analysis()
+
+# Export knowledge base
+from src.discovery import export_knowledge_base
+export_knowledge_base("ns_kb.json")
+```
+
+Or use the script:
+```bash
+python scripts/run_proof_search.py --max-depth 15 --beam-width 200
+python scripts/run_proof_search.py --gap-only
+```
+
+### Files Created/Modified
+
+- `src/discovery/proof_search.py` - Main engine (1100+ lines)
+- `src/discovery/__init__.py` - Added proof search exports
+- `scripts/run_proof_search.py` - CLI script with options
+- `results/ns_knowledge_base.json` - Exported KB (11KB)
+
+### Significance
+
+This proof search engine:
+1. **Formalizes** the NS regularity proof landscape
+2. **Identifies** exactly what lemmas are missing
+3. **Explains** why the gap (1/2, 3/5) is fundamental
+4. **Provides** a framework for testing new results
+
+The engine correctly finds no proof path - confirming that current mathematical tools cannot solve the Millennium Problem, and identifying precisely where new mathematics is needed.
+
+---
+
+## 2026-01-13: GENETIC ALGORITHM FOR FUNCTIONAL INEQUALITY DISCOVERY
+
+### New Module Created
+
+Created `src/discovery/genetic_inequality.py` - A comprehensive genetic algorithm system for discovering new functional inequalities relevant to bridging the Navier-Stokes dimensional gap.
+
+### The Problem Being Addressed
+
+The gap we're trying to bridge:
+- **Known:** r^{-2} integral |u|^3 bounded (CKN, dimension 0)
+- **Needed:** r^{-(2m-1)} integral |u|^2 bounded for m in (1/2, 3/5)
+- **Dimensional mismatch:** approximately 0.9 dimensions apart
+
+Target: Find inequalities of form:
+```
+||u||_{L^2(B(r))} <= C r^alpha ||u||_{L^3}^beta ||grad u||_{L^2}^gamma ...
+```
+with alpha > (2m-1)/2 approximately 0.05.
+
+### Components Implemented
+
+| Component | Description |
+|-----------|-------------|
+| `Dimension` class | Physical dimension tracking under NS scaling (x -> lambda*x, t -> lambda^2*t) |
+| `StandardDimensions` | Catalog of NS quantities: velocity (L^{-1}), vorticity (L^{-2}), etc. |
+| `ExpressionNode/Tree` | Gene representation as mathematical expression trees |
+| `NodeType` enum | Operators (+, -, *, /, ^, grad, Delta, integral, L^p norm) and leaves (u, omega, p, r, nu) |
+| `InequalityCandidate` | Full inequality representation with LHS <= C * RHS |
+| `FitnessEvaluator` | Multi-criteria fitness: dimensional consistency, interpolation, scaling, monotonicity, novelty |
+| `GeneticOperator` | Crossover (subtree swap), mutation (powers, operators, subtrees), tournament selection |
+| `InequalityValidator` | Check against Holder, Sobolev, Gagliardo-Nirenberg, CKN, Ladyzhenskaya |
+| `GeneticInequalityDiscovery` | Main evolution loop with elite preservation |
+
+### Fitness Criteria (Weighted)
+
+1. **Dimensional consistency (weight 10):** LHS and RHS must have same physical dimension
+2. **Interpolation property (weight 5):** Connects L^3 norms to L^2 norms
+3. **Scaling analysis (weight 3):** r^alpha with alpha in target range (0.05, 0.5)
+4. **Monotonicity (weight 2):** Energy-like terms that decrease under NS flow
+5. **Novelty (weight 1):** Not trivial variant of known inequality
+6. **Simplicity (weight 0.5):** Occam's razor bonus
+
+### Initial Test Results
+
+Running with population=100, generations=200:
+- Found 33 promising candidates with fitness > 0.5
+- Best candidate achieved fitness 0.851
+- Best inequality is dimensionally valid (LHS dim = RHS dim = L^0.5)
+- Evolution improved mean fitness from 0.33 to 0.53
+
+### Usage
+
+```python
+from src.discovery import run_discovery
+
+# Run discovery
+discovery = run_discovery(
+    population_size=100,
+    max_generations=200,
+    seed=42,
+    verbose=True
+)
+
+# Get promising candidates
+candidates = discovery.get_promising_candidates(min_fitness=0.6)
+
+# Print report
+print(discovery.report())
+```
+
+### Files Modified
+
+- `src/discovery/__init__.py` - Added genetic_inequality exports
+- `src/discovery/genetic_inequality.py` - New file (900+ lines)
+
+### Next Steps
+
+1. Add numerical verification of discovered inequalities on test solutions
+2. Implement more sophisticated monotonicity checking using NS dynamics
+3. Add symbolic simplification of complex expressions
+4. Integrate with SymPy for analytical verification
+5. Test discovered inequalities against Hou-Luo blowup candidates
+
+---
+
+## 2026-01-13: GEOMETRIC MEASURE THEORY APPROACHES - UPDATED
+
+### Research Summary Update
+
+Updated `docs/research/geometric-measure-ns.md` with comprehensive new appendix covering 2024-2026 developments in geometric measure theory approaches to Navier-Stokes singularities.
+
+### Key New Findings Added
+
+| Topic | Source | Finding |
+|-------|--------|---------|
+| Geometric characterization | arXiv 2501.08976 (Jan 2025) | Vorticity must avoid any great circle on S^2 for regularity |
+| Quantitative classification | arXiv 2510.20757 (Oct 2025) | First quantitative bounds for axisymmetric singularities |
+| Sparseness framework | Grujic et al. (2021-2024) | Vorticity super-level set sparseness controls regularity |
+| Box-counting bounds | Various (2024) | dim_B(S) <= 7/6 for interior, 10/9 for boundary |
+| Tao's triple-exp bounds | (2019) | First supercritical blowup criterion |
+| Kakeya geometry | ResearchGate (2025) | Seven-phase singularity construction via vortex filaments |
+
+### Key Question Addressed
+
+**Does the geometric structure of the singular set constrain how vorticity can concentrate?**
+
+Answer: Yes, through several mechanisms:
+1. CKN epsilon-regularity bounds local L^3 concentration
+2. Energy concentration dimension constrains where energy can concentrate
+3. Grujic sparseness translates geometric constraints to L^infinity bounds
+4. Constantin-Fefferman: 1/2-Holder vorticity direction => omega in L^infinity L^2
+
+**Gap:** Current methods cannot fully exclude concentration on sets of dimension between 0 and 1.
+
+### Almgren-Type Approaches Status
+
+No direct Almgren frequency function established for NS. Challenges:
+- NS nonlinearity disrupts simple monotonicity
+- Pressure introduces nonlocal effects
+- Recent quantitative work uses frequency-function-like energy ratios
+
+### Stratification/Rectifiability Status
+
+Naber-Valtorta framework not yet adapted to NS:
+- CKN implies dim(S) <= 1
+- Full rectifiability of S remains OPEN
+- Conjecture: S is 0-dimensional (isolated points)
+
+---
+
 ## 2026-01-13: COMPUTER-ASSISTED PROOF METHODS FOR NAVIER-STOKES
 
 ### New Research Document

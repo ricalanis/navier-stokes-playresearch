@@ -477,3 +477,201 @@ The gap between current knowledge and full regularity remains one of the most ch
 ---
 
 *Last updated: January 13, 2026*
+
+---
+
+## Appendix: Latest Research Updates (January 2026)
+
+This appendix contains the most recent research findings from 2024-2026 on geometric measure theory approaches to Navier-Stokes singularities.
+
+### A.1 Geometric Characterization of Potential Singularities (January 2025)
+
+**Reference:** [A geometric characterization of potential Navier-Stokes singularities](https://arxiv.org/abs/2501.08976)
+
+A significant new result establishes a regularity criterion based on vorticity geometry:
+
+**Main Theorem:** For a local suitable weak solution to the Navier-Stokes equations, if the vorticity vectors belong to a double cone in regions of high vorticity magnitude, then the solution is regular.
+
+**Key Conditions:**
+- Vorticity directions cannot be confined to a cone structure near potential singularities
+- The vorticity field must "avoid any great circle on the unit sphere" near singularities
+- Vorticity directions must be distributed sufficiently broadly across the unit sphere
+
+**Implications for Singular Set:**
+- For blow-up to occur at a point, the set of vorticity directions I must be a "sufficiently large" set
+- Specifically, I intersects with every great circle on S^2 if and only if the point is singular
+- This provides a geometric characterization: singularities require vorticity to span all directions
+
+**Physical Interpretation:** The stretching of vortex tubes alone may be insufficient to generate singularity; the twisting and folding of vortex tubes could play an important role as it enhances local vorticity fluxes.
+
+### A.2 Quantitative Classification of Singularities (October 2025)
+
+**Reference:** [Quantitative classification of potential Navier-Stokes singularities beyond the blow-up time](https://arxiv.org/abs/2510.20757)
+
+This work provides quantitative bounds on potentially singular solutions:
+
+**Key Techniques:**
+1. Quantitative regularity regions for axisymmetric data
+2. Physical space analogue of Tao's strategy for critically bounded solutions
+3. Recursive Carleman inequalities applied iteratively to track localized vorticity concentration
+4. Energy estimates combined with quantitative bounds
+
+**Main Results:**
+- First quantitative classification of potentially singular solutions for approximately axisymmetric initial data
+- Bounds amenable to numerical testing against Hou's proposed singular solution candidate
+- All forward-in-time iterations remain within regions of quantitative regularity
+
+### A.3 Concentration and Quantitative Regularity Survey (2023)
+
+**Reference:** [From concentration to quantitative regularity: a short survey](https://arxiv.org/abs/2211.16215) (Vietnam Journal of Mathematics)
+
+**Key Questions Addressed:**
+1. Are certain norms accumulating/concentrating on small scales near potential blow-up times?
+2. At what speed do certain scale-invariant norms blow-up?
+3. Can one prove explicit quantitative regularity estimates?
+4. Can one break the criticality barrier, even slightly?
+
+**Key Results by Barker and Prange:**
+- Localized quantitative estimates for the Navier-Stokes equations
+- Mild criticality breaking: For suitable weak Leray-Hopf solutions with initial data in L^2 cap L^4, certain assumptions imply global smoothness
+- Explicit formulas for critical parameters depending on energy bounds
+
+### A.4 Grujic's Sparseness Framework (2021-2024)
+
+**Reference:** [Geometry of turbulent dissipation and the Navier-Stokes regularity problem](https://www.nature.com/articles/s41598-021-87774-y)
+
+**Core Concept:** A regularity theory based on the 'sparseness at scale' of regions of intense fluid activity.
+
+**Main Mathematical Approach:**
+- Utilize sparseness of vorticity super-level sets via the harmonic measure maximum principle
+- Sparseness translates into smallness of harmonic measure providing a bound on the L^infinity norm
+- Principal result: As long as vorticity super-level sets are sparse at the scale comparable to the radius of spatial analyticity, no finite time blow-up occurs
+
+**Significance:**
+- First scaling reduction of the NS super-criticality since the 1960s
+- The framework based on "scale of sparseness" of regions of intense vorticity provides new geometric constraints
+- Numerical validation shows the scale is well-suited to detect the onset of dissipation
+
+**Key Publications:**
+- Bradshaw, Farhat, Grujic (ARMA, 2018): Z_alpha-sparseness classes
+- Albritton and Bradshaw (2021): Simple proof that sufficiently sparse solutions do not develop singularities
+- Grujic (2021): Local anisotropic geometric measure-type condition on super-level sets
+
+### A.5 Improved Box-Counting Dimension Bounds
+
+**Latest Bounds (2024):**
+- Interior singular points: dim_B(S) <= 7/6
+- Boundary singular points: dim_B(S) <= 10/9
+- Parabolic fractal dimension: <= 45/29 (approximately 1.286)
+
+**Technique:** Quantitative partial regularity using energy pigeonholing arguments.
+
+### A.6 Terence Tao's Quantitative Bounds (2019)
+
+**Reference:** [Quantitative bounds for critically bounded solutions](https://terrytao.wordpress.com/2019/08/15/quantitative-bounds-for-critically-bounded-solutions-to-the-navier-stokes-equations/)
+
+**Main Theorem:** If ||u||_{L^infinity_t L^3_x} <= A on [0,T) x R^3, then:
+- |nabla^j u(t,x)| <= exp exp exp(A^{O(1)}) * t^{-(j+1)/2}
+- |nabla^j omega(t,x)| <= exp exp exp(A^{O(1)}) * t^{-(j+2)/2}
+
+**Blowup Rate Improvement:** The classical Escauriaza-Seregin-Sverak criterion improves to:
+$$\limsup_{t \to T_*} \frac{\|u(t)\|_{L^3}}{[\log\log\log(1/(T_*-t))]^c} = +\infty$$
+
+This represents the "first (very) slightly supercritical blowup criterion" in the literature.
+
+**Methodology:**
+1. Backwards propagation of concentration via Duhamel's formula
+2. Energy pigeonholing to locate "annuli of regularity"
+3. Carleman inequalities for propagating vorticity bounds
+4. Stacking regular regions to contradict the L^3 bound
+
+### A.7 Vortex Filament and Type I Structures (2022-2025)
+
+**Hou's Axisymmetric Numerical Evidence:**
+- The 3D Navier-Stokes equations develop nearly self-similar singular scaling properties
+- Maximum vorticity increased by a factor of 10^7 in simulations
+- The potential singularity is induced by a potential finite time singularity of the 3D Euler equations
+
+**Two-Scale Traveling Wave Structure:**
+- Solution develops a two-scale traveling wave approaching the origin
+- Center of the traveling wave approaches origin at a slower rate than the collapse rate
+- This structure is characteristic of potential axisymmetric singularities
+
+**Kakeya Geometry Connection (2025):**
+Seven-phase construction for finite-time singularity formation:
+- Phase A: Smooth vorticity evolves into thin, well-separated vortex filaments
+- Phase C: Modulated energy method reduces dynamics to interacting vortex pair
+- Conclusion: Finite-time collision and vorticity blow-up under certain geometric constraints
+
+### A.8 Connection to ||u||_{L^2(B(r))} Bounds
+
+**Your Key Question:** Does the geometric structure of the singular set constrain how vorticity can concentrate and thereby bound ||u||_{L^2(B(r))}?
+
+**Current Understanding:**
+
+1. **CKN Local Energy Bound:** The epsilon-regularity criterion shows that if
+   $$\frac{1}{r^2}\int_{Q_r(z_0)} (|u|^3 + |p|^{3/2}) \, dz < \varepsilon$$
+   then u is regular at z_0. This bounds local L^3 (not L^2) concentration.
+
+2. **Energy Concentration and Dimension:**
+   - The "concentration dimension" is defined as the Hausdorff dimension of the smallest set on which energy can concentrate
+   - Lower local dimension of the energy measure provides uniform bounds
+   - Both measure the departure from energy equality
+
+3. **Vorticity Level Set Bounds:**
+   - The L^1 norm of vorticity is a priori bounded in time
+   - Time average of the 4/(3+epsilon) power of the L^{4/(3+epsilon)} spatial norm of the vorticity gradient is bounded
+   - 2D Hausdorff measure of level sets of vorticity magnitude has a priori bounds on average
+
+4. **Geometric Constraints -> L^2 Bounds:**
+   - Constantin-Fefferman (1993): If vorticity direction is 1/2-Holder continuous, then omega in L^infinity L^2
+   - Grujic sparseness: If vorticity super-level sets are sparse, ||u||_{L^infinity} is bounded
+   - These geometric conditions translate into norm bounds through harmonic measure estimates
+
+**Gap in Current Methods:**
+The L^2 norm, while globally bounded, does not provide sufficient control over fine-scale behavior. This is precisely where blow-up would occur. The geometric structure (dim <= 1 for singular set) constrains concentration to lower-dimensional sets, but current methods cannot fully exclude concentration on sets of dimension between 0 and 1.
+
+### A.9 Almgren-Type Approaches for NS (Status)
+
+**Direct Application Challenges:**
+- NS nonlinearity disrupts simple monotonicity
+- Pressure introduces nonlocal effects
+- Coupling between velocity components complicates analysis
+
+**Current State:**
+No direct Almgren frequency function has been established for Navier-Stokes. However:
+- CKN theory draws on Almgren's geometric measure theory framework conceptually
+- Recent quantitative results employ frequency-function-like ratios (energy ratios at different scales)
+- The 2024 quantitative CKN improvements use modified energy ratios capturing frequency function philosophy
+
+**Research Direction:** Developing a parabolic frequency function specifically adapted to NS structure remains an open problem.
+
+### A.10 Stratification and Rectifiability (Status for NS)
+
+**Naber-Valtorta Quantitative Stratification:**
+- Developed for harmonic maps, minimal surfaces, and geometric PDEs
+- Shows singular k-stratum is k-rectifiable with effective bounds
+- Based on approximate symmetries of tangent objects
+
+**Application to NS:**
+- Direct application remains challenging due to nonlocal pressure and nonlinear structure
+- The "quantitative stratification and Rectifiable-Reifenberg framework" could potentially apply
+- Would require developing tangent measure theory adapted to NS scaling
+
+**Current Knowledge:**
+- CKN bound H^1_P(S) = 0 implies singular set is at most 1-dimensional
+- Full rectifiability of S remains OPEN
+- Conjecture: If singularities exist, the singular set should be 0-dimensional (isolated points)
+
+### References for Appendix
+
+1. [A geometric characterization of potential Navier-Stokes singularities](https://arxiv.org/abs/2501.08976) (arXiv, January 2025)
+2. [Quantitative classification of potential Navier-Stokes singularities beyond the blow-up time](https://arxiv.org/abs/2510.20757) (arXiv, October 2025)
+3. [From concentration to quantitative regularity: a short survey](https://link.springer.com/article/10.1007/s10013-023-00665-9) (Vietnam J. Math., 2023)
+4. [Geometry of turbulent dissipation and the Navier-Stokes regularity problem](https://www.nature.com/articles/s41598-021-87774-y) (Scientific Reports, 2021)
+5. [Quantitative bounds for critically bounded solutions](https://terrytao.wordpress.com/2019/08/15/quantitative-bounds-for-critically-bounded-solutions-to-the-navier-stokes-equations/) (Tao's blog, 2019)
+6. [The Navier-Stokes regularity problem](https://royalsocietypublishing.org/doi/10.1098/rsta.2019.0526) (Phil. Trans. R. Soc. A, 2020)
+7. [Epsilon regularity via weak-strong uniqueness](https://link.springer.com/article/10.1007/s00021-023-00780-0) (JMFM, 2023)
+8. [Stratification and Rectifiability of Harmonic Map Flows via Tangent Measures](https://arxiv.org/abs/2504.14880) (arXiv, April 2025)
+9. [Geometric regularity criteria for the Navier-Stokes equations in terms of velocity direction](https://onlinelibrary.wiley.com/doi/abs/10.1002/mma.9870) (MMAS, 2024)
+10. [On Rough Calderon Solutions to the Navier-Stokes Equations and Applications to the Singular Set](https://link.springer.com/article/10.1007/s00021-025-00930-6) (JMFM, 2025)

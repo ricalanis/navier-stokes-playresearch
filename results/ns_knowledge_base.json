@@ -1,0 +1,478 @@
+{
+  "statements": [
+    {
+      "id": "SOBOLEV_3D",
+      "name": "Sobolev Embedding (3D)",
+      "type": "BOUND",
+      "content": "||u||_{L^6} <= C ||nabla u||_{L^2}",
+      "hypotheses": [],
+      "source": "Sobolev, 1938",
+      "confidence": 1.0,
+      "tags": [
+        "embedding",
+        "sobolev",
+        "classical",
+        "velocity"
+      ]
+    },
+    {
+      "id": "HOLDER_INTERP",
+      "name": "Holder Interpolation",
+      "type": "BOUND",
+      "content": "||u||_{L^p} <= ||u||_{L^a}^theta ||u||_{L^b}^{1-theta}, 1/p = theta/a + (1-theta)/b",
+      "hypotheses": [],
+      "source": "Holder",
+      "confidence": 1.0,
+      "tags": [
+        "holder",
+        "classical",
+        "interpolation"
+      ]
+    },
+    {
+      "id": "YOUNG_CONVOLUTION",
+      "name": "Young's Convolution Inequality",
+      "type": "BOUND",
+      "content": "||f * g||_{L^r} <= ||f||_{L^p} ||g||_{L^q}, 1/r = 1/p + 1/q - 1",
+      "hypotheses": [],
+      "source": "Young, 1912",
+      "confidence": 1.0,
+      "tags": [
+        "classical",
+        "convolution"
+      ]
+    },
+    {
+      "id": "CALDERON_ZYGMUND",
+      "name": "Calderon-Zygmund Estimate",
+      "type": "BOUND",
+      "content": "||D^2 f||_{L^p} <= C ||Delta f||_{L^p} for 1 < p < infty",
+      "hypotheses": [],
+      "source": "Calderon-Zygmund, 1952",
+      "confidence": 1.0,
+      "tags": [
+        "regularity",
+        "classical",
+        "elliptic"
+      ]
+    },
+    {
+      "id": "BIOT_SAVART",
+      "name": "Biot-Savart Law",
+      "type": "IDENTITY",
+      "content": "u = K * omega, K(x) = x/(4pi|x|^3)",
+      "hypotheses": [],
+      "source": "Biot-Savart",
+      "confidence": 1.0,
+      "tags": [
+        "biot_savart",
+        "vorticity",
+        "structure",
+        "velocity"
+      ]
+    },
+    {
+      "id": "BIOT_SAVART_BOUND",
+      "name": "Biot-Savart L^p Estimate",
+      "type": "BOUND",
+      "content": "||u||_{L^q} <= C ||omega||_{L^p}, 1/q = 1/p - 1/3 for 1 < p < 3",
+      "hypotheses": [],
+      "source": "Hardy-Littlewood-Sobolev",
+      "confidence": 1.0,
+      "tags": [
+        "biot_savart",
+        "estimate",
+        "vorticity",
+        "velocity"
+      ]
+    },
+    {
+      "id": "ENERGY_DECAY",
+      "name": "Energy Dissipation",
+      "type": "INEQUALITY",
+      "content": "d/dt ||u||^2_{L^2} = -2 nu ||nabla u||^2_{L^2} <= 0",
+      "hypotheses": [],
+      "source": "Leray, 1934",
+      "confidence": 1.0,
+      "tags": [
+        "energy",
+        "monotone",
+        "dissipation",
+        "fundamental"
+      ]
+    },
+    {
+      "id": "ENERGY_BOUND",
+      "name": "Energy Bound",
+      "type": "BOUND",
+      "content": "||u(t)||_{L^2} <= ||u_0||_{L^2} = E_0^{1/2}",
+      "hypotheses": [
+        "ENERGY_DECAY"
+      ],
+      "source": "Leray, 1934",
+      "confidence": 1.0,
+      "tags": [
+        "energy",
+        "global",
+        "bound"
+      ]
+    },
+    {
+      "id": "ENSTROPHY_EQ",
+      "name": "Enstrophy Evolution",
+      "type": "IDENTITY",
+      "content": "d/dt ||omega||^2_{L^2} = 2 int (omega . nabla)u . omega - 2 nu ||nabla omega||^2_{L^2}",
+      "hypotheses": [],
+      "source": "NS vorticity equation",
+      "confidence": 1.0,
+      "tags": [
+        "enstrophy",
+        "vorticity",
+        "stretching"
+      ]
+    },
+    {
+      "id": "PRESSURE_POISSON",
+      "name": "Pressure Poisson Equation",
+      "type": "IDENTITY",
+      "content": "Delta p = -div(u . nabla u) = -partial_i u_j partial_j u_i",
+      "hypotheses": [],
+      "source": "NS incompressibility",
+      "confidence": 1.0,
+      "tags": [
+        "structure",
+        "pressure"
+      ]
+    },
+    {
+      "id": "PRESSURE_BOUND",
+      "name": "Pressure L^{3/2} Bound",
+      "type": "BOUND",
+      "content": "||p||_{L^{3/2}} <= C ||u||^2_{L^3}",
+      "hypotheses": [
+        "PRESSURE_POISSON",
+        "CALDERON_ZYGMUND"
+      ],
+      "source": "CKN, 1982",
+      "confidence": 1.0,
+      "tags": [
+        "bound",
+        "pressure"
+      ]
+    },
+    {
+      "id": "CKN_EPSILON",
+      "name": "CKN Epsilon-Regularity",
+      "type": "IMPLICATION",
+      "content": "r^{-2} int_{Q(r)} (|u|^3 + |p|^{3/2}) < epsilon => u regular at origin",
+      "hypotheses": [],
+      "source": "Caffarelli-Kohn-Nirenberg, 1982",
+      "confidence": 1.0,
+      "tags": [
+        "regularity_criterion",
+        "fundamental",
+        "ckn",
+        "local"
+      ]
+    },
+    {
+      "id": "CKN_SINGULAR_SET",
+      "name": "CKN Singular Set Bound",
+      "type": "BOUND",
+      "content": "H^1(singular set) = 0 (1D Hausdorff measure)",
+      "hypotheses": [],
+      "source": "Caffarelli-Kohn-Nirenberg, 1982",
+      "confidence": 1.0,
+      "tags": [
+        "singular_set",
+        "ckn",
+        "partial_regularity"
+      ]
+    },
+    {
+      "id": "BKM_CRITERION",
+      "name": "BKM Regularity Criterion",
+      "type": "IMPLICATION",
+      "content": "int_0^T ||omega(t)||_{L^infty} dt < infty => u smooth on [0,T]",
+      "hypotheses": [],
+      "source": "Beale-Kato-Majda, 1984",
+      "confidence": 1.0,
+      "tags": [
+        "bkm",
+        "regularity_criterion",
+        "vorticity",
+        "fundamental"
+      ]
+    },
+    {
+      "id": "BKM_CONTRAPOSITIVE",
+      "name": "BKM Contrapositive",
+      "type": "IMPLICATION",
+      "content": "Blowup at T => int_0^T ||omega(t)||_{L^infty} dt = infty",
+      "hypotheses": [
+        "BKM_CRITERION"
+      ],
+      "source": "BKM contrapositive",
+      "confidence": 1.0,
+      "tags": [
+        "bkm",
+        "necessary",
+        "blowup",
+        "vorticity"
+      ]
+    },
+    {
+      "id": "ESS_L3",
+      "name": "ESS L^3 Regularity",
+      "type": "IMPLICATION",
+      "content": "u in L^infty_t L^3_x near (x_0, T) => (x_0, T) is regular",
+      "hypotheses": [],
+      "source": "Escauriaza-Seregin-Sverak, 2003",
+      "confidence": 1.0,
+      "tags": [
+        "ess",
+        "regularity_criterion",
+        "critical",
+        "fundamental"
+      ]
+    },
+    {
+      "id": "ESS_CONTRAPOSITIVE",
+      "name": "ESS Contrapositive",
+      "type": "IMPLICATION",
+      "content": "Blowup at (x_0, T) => ||u||_{L^3} -> infty",
+      "hypotheses": [
+        "ESS_L3"
+      ],
+      "source": "ESS contrapositive",
+      "confidence": 1.0,
+      "tags": [
+        "ess",
+        "necessary",
+        "blowup"
+      ]
+    },
+    {
+      "id": "NRS_L3",
+      "name": "NRS Self-Similar Exclusion",
+      "type": "IMPLICATION",
+      "content": "U in L^3(R^3) self-similar profile => U = 0",
+      "hypotheses": [],
+      "source": "Necas-Ruzicka-Sverak, 1996",
+      "confidence": 1.0,
+      "tags": [
+        "liouville",
+        "self_similar",
+        "nrs",
+        "fundamental"
+      ]
+    },
+    {
+      "id": "NRS_WEAK_L3_OPEN",
+      "name": "NRS Weak L^3 Gap",
+      "type": "BOUND",
+      "content": "U in L^{3,infty}(R^3) self-similar: STATUS OPEN",
+      "hypotheses": [],
+      "source": "Open problem",
+      "confidence": 0.0,
+      "tags": [
+        "weak_L3",
+        "open",
+        "self_similar",
+        "gap"
+      ]
+    },
+    {
+      "id": "TYPE_I_DEF",
+      "name": "Type I Blowup Definition",
+      "type": "DEFINITION",
+      "content": "||u||_infty <= C/(T-t)^{1/2} (self-similar rate)",
+      "hypotheses": [],
+      "source": "",
+      "confidence": 1.0,
+      "tags": [
+        "definition",
+        "type_I",
+        "blowup_rate"
+      ]
+    },
+    {
+      "id": "TYPE_II_DEF",
+      "name": "Type II Blowup Definition",
+      "type": "DEFINITION",
+      "content": "||u||_infty * (T-t)^{1/2} -> infty (faster than self-similar)",
+      "hypotheses": [],
+      "source": "",
+      "confidence": 1.0,
+      "tags": [
+        "definition",
+        "type_II",
+        "blowup_rate"
+      ]
+    },
+    {
+      "id": "TYPE_I_RULED_OUT",
+      "name": "Type I Ruled Out",
+      "type": "IMPLICATION",
+      "content": "Type I blowup => contradiction (Seregin 2012)",
+      "hypotheses": [
+        "ESS_L3"
+      ],
+      "source": "Seregin, 2012",
+      "confidence": 1.0,
+      "tags": [
+        "type_I",
+        "ruled_out",
+        "seregin"
+      ]
+    },
+    {
+      "id": "TYPE_II_WINDOW",
+      "name": "Type II Window",
+      "type": "BOUND",
+      "content": "If blowup exists, rate alpha in [1/2, 3/4) with ||u||_infty ~ (T-t)^{-alpha}",
+      "hypotheses": [
+        "BKM_CRITERION",
+        "ENERGY_DECAY"
+      ],
+      "source": "Analysis synthesis",
+      "confidence": 1.0,
+      "tags": [
+        "type_II",
+        "blowup_rate",
+        "window",
+        "gap"
+      ]
+    },
+    {
+      "id": "SEREGIN_14",
+      "name": "Seregin Condition (1.4)",
+      "type": "IMPLICATION",
+      "content": "If A_{m_1}(r) + E_m(r) + D_m(r) bounded for m in (1/2, 3/5) => regularity",
+      "hypotheses": [],
+      "source": "Seregin, 2025 (arXiv:2507.08733)",
+      "confidence": 1.0,
+      "tags": [
+        "type_II",
+        "regularity_criterion",
+        "seregin"
+      ]
+    },
+    {
+      "id": "SEREGIN_Am1",
+      "name": "Weighted Velocity Norm A_{m_1}",
+      "type": "DEFINITION",
+      "content": "A_{m_1}(r) = r^{1-2m} sup_t int_{B(r)} |u|^2 dx",
+      "hypotheses": [],
+      "source": "",
+      "confidence": 1.0,
+      "tags": [
+        "definition",
+        "seregin",
+        "weighted"
+      ]
+    },
+    {
+      "id": "SEREGIN_Em",
+      "name": "Weighted Dissipation E_m",
+      "type": "DEFINITION",
+      "content": "E_m(r) = r^{-m} int_{Q(r)} |nabla u|^2 dz",
+      "hypotheses": [],
+      "source": "",
+      "confidence": 1.0,
+      "tags": [
+        "definition",
+        "dissipation",
+        "seregin",
+        "weighted"
+      ]
+    },
+    {
+      "id": "TARGET_LOCAL_DECAY",
+      "name": "Target: Local L^2 Decay",
+      "type": "DECAY",
+      "content": "||u||_{L^2(B(r))} <= C r^beta with beta > 0.05",
+      "hypotheses": [],
+      "source": "",
+      "confidence": 0.0,
+      "tags": [
+        "target",
+        "decay",
+        "local"
+      ]
+    },
+    {
+      "id": "SCALING_NS",
+      "name": "NS Scaling Symmetry",
+      "type": "SCALING",
+      "content": "u_lambda(x,t) = lambda u(lambda x, lambda^2 t) is a solution if u is",
+      "hypotheses": [],
+      "source": "NS structure",
+      "confidence": 1.0,
+      "tags": [
+        "symmetry",
+        "fundamental",
+        "scaling"
+      ]
+    },
+    {
+      "id": "SCALE_CRITICAL_L3",
+      "name": "L^3 is Scale-Critical",
+      "type": "SCALING",
+      "content": "||u||_{L^3} is invariant under NS scaling",
+      "hypotheses": [
+        "SCALING_NS"
+      ],
+      "source": "",
+      "confidence": 1.0,
+      "tags": [
+        "critical",
+        "L3",
+        "scaling"
+      ]
+    },
+    {
+      "id": "LOCAL_ENERGY_INEQ",
+      "name": "Local Energy Inequality",
+      "type": "INEQUALITY",
+      "content": "int |u|^2 phi dx |_{t2} + 2nu int int |nabla u|^2 phi <= int |u|^2 phi |_{t1} + transport terms",
+      "hypotheses": [],
+      "source": "CKN, 1982",
+      "confidence": 1.0,
+      "tags": [
+        "energy",
+        "ckn",
+        "local"
+      ]
+    },
+    {
+      "id": "INTERP_L2_LINF",
+      "name": "L^2-L^infty Interpolation for Velocity",
+      "type": "BOUND",
+      "content": "||u||_{L^3} <= ||u||_{L^2}^{2/3} ||u||_{L^infty}^{1/3}",
+      "hypotheses": [
+        "HOLDER_INTERP"
+      ],
+      "source": "",
+      "confidence": 1.0,
+      "tags": [
+        "velocity",
+        "interpolation"
+      ]
+    },
+    {
+      "id": "INTERP_GRADIENT_HOLDER",
+      "name": "Gradient Interpolation",
+      "type": "BOUND",
+      "content": "||nabla u||_{L^2}^2 >= c ||u||_{L^infty}^{4/3} ||u||_{L^2}^{2/3}",
+      "hypotheses": [],
+      "source": "Nash inequality variant",
+      "confidence": 1.0,
+      "tags": [
+        "nash",
+        "interpolation",
+        "gradient"
+      ]
+    }
+  ]
+}
