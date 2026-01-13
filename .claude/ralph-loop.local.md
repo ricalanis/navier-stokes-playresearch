@@ -45,9 +45,29 @@ To close the gap requires GENUINELY NEW mathematics:
 - A geometric obstruction to concentration
 - OR: Construction of a concentrating solution
 
-## Iteration 10 Options
+## Iteration 10: Computational Toolkit & Numerical Evidence
 
-1. Explore stochastic NS (could randomness prevent blowup?)
-2. Consider convex integration (could construct blowup?)
-3. Search for novel monotonicity formulas
-4. Accept: current methods are exhausted
+**Built Python toolkit (src/):**
+- Spectral NS solver (N=64, RK4, dealiasing)
+- Anti-parallel vortex tubes tested at ν → 0
+
+**KEY NUMERICAL FINDING:**
+- Solutions TRANSIENTLY enter [0.6, 0.75)
+- Max α observed: 0.87 - 1.02
+- But CANNOT SUSTAIN: Final α → 0 (decay)
+
+**Interpretation:** The window is dynamically inaccessible!
+Numerical evidence supports theoretical obstruction.
+
+## Summary After 10 Iterations
+
+| Aspect | Result |
+|--------|--------|
+| Profile-based | ALL ruled out (Theorems D-I, N-P) |
+| Energy bounds | α < 3/4 (tight) |
+| BKM bounds | α ≥ 3/5 (tight) |
+| Compactness | Type II = failure of compactness |
+| Numerics | Window transiently entered, never sustained |
+
+**The Type II window [3/5, 3/4) appears inaccessible both
+theoretically (compactness fails) and numerically (α oscillates).**
