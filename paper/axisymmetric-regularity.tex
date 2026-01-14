@@ -239,21 +239,38 @@ The rescaled $\eta$ satisfies:
 \]
 where $\tilde{\mathcal{L}}$ is the rescaled parabolic operator and
 \[
-\nueff(\tau) = \nu \exp\left(\frac{(2\alpha-1)\tau}{2\alpha}\right)
+\nueff(\tau) = \nu \lambda^{2\alpha-2} = \nu \exp\left(2(1-\alpha)\tau\right)
 \]
 \end{lemma}
 
-\subsection{Diverging Effective Viscosity}
+\begin{proof}
+Under the change of variables, the diffusion term scales as $\nu \lambda^{-2}$ while the advection scales as $\lambda^{-(1+\alpha)}$. Their ratio gives the effective viscosity coefficient $\nueff = \nu \lambda^{2\alpha-2}$. Since $\lambda = e^{-\tau}$, we obtain $\nueff = \nu e^{2(1-\alpha)\tau}$.
+\end{proof}
+
+\subsection{Diverging Effective Viscosity and Reynolds Number}
 
 \begin{proposition}\label{prop:nueff}
-For $\alpha > 1/2$: $\nueff(\tau) \to \infty$ as $\tau \to \infty$.
+For $\alpha \in (1/2, 1)$: $\nueff(\tau) \to \infty$ as $\tau \to \infty$.
 \end{proposition}
 
 \begin{proof}
-Since $2\alpha - 1 > 0$ for $\alpha > 1/2$, the exponential growth gives divergence.
+For $\alpha < 1$, the exponent $2(1-\alpha) > 0$. Since $\nueff = \nu e^{2(1-\alpha)\tau}$, exponential growth gives $\nueff \to \infty$.
 \end{proof}
 
-\textbf{Physical Interpretation:} As we zoom into the potential singularity, viscous effects become \emph{dominant}, not negligible. This is opposite to Type I ($\alpha = 1/2$) where effective viscosity stays constant.
+\begin{remark}[Effective Reynolds Number]
+The rescaled Reynolds number satisfies:
+\[
+\text{Re}_{\text{eff}} = \frac{|\tilde{V}| \cdot |\tilde{y}|}{\nueff} \sim \frac{O(1)}{\nueff} \to 0 \quad \text{as } \tau \to \infty
+\]
+Thus the rescaled flow becomes \emph{Stokes-like}: viscosity dominates advection, and the nonlinear term $({\tilde{V}} \cdot \nabla)\tilde{V}$ becomes negligible compared to $\nueff \Delta \tilde{V}$.
+\end{remark}
+
+\textbf{Physical Interpretation:} As we zoom into the potential singularity, viscous effects become \emph{dominant}, not negligible. This is opposite to:
+\begin{itemize}
+\item Type I ($\alpha = 1/2$): $\nueff$ remains constant, $\text{Re}_{\text{eff}} = O(1)$
+\item Euler limit: $\nu = 0$, $\text{Re} = \infty$
+\end{itemize}
+The Type II rescaling induces ``infinite smoothing'' that prevents singularity formation.
 
 \subsection{Viscous Homogenization}
 
@@ -266,25 +283,41 @@ In particular, $\norm{\tilde{\eta}(\tau)}_{L^2} \to 0$ super-exponentially as $\
 \end{theorem}
 
 \begin{proof}
-Define the weighted energy $E(\tau) = \int |\tilde{\eta}|^2 \rho^3 \, d\rho\, d\zeta$.
+The proof uses a \emph{spectral gap argument} following Escauriaza-Seregin-\v{S}ver\'ak \cite{ESS2003}.
 
-\textbf{Step 1 (Energy Identity):} Multiplying by $\tilde{\eta}\rho^3$ and integrating:
+\textbf{Step 1 (Fokker-Planck Structure):} The rescaled equation has the form:
 \[
-\frac{1}{2}\frac{dE}{d\tau} = -\nueff D + \text{(lower order terms)}
+\pd{\tilde{\eta}}{\tau} - \alpha(y \cdot \nabla)\tilde{\eta} = \nueff \tilde{\mathcal{L}}[\tilde{\eta}] + \text{(advection by } \tilde{V})
 \]
-where $D = \int |\nabla\tilde{\eta}|^2 \rho^3$.
+The drift term $-\alpha(y \cdot \nabla)$ creates a confining potential $\Phi(y) = \alpha|y|^2/2$, analogous to an Ornstein-Uhlenbeck process.
 
-\textbf{Step 2 (Poincar\'e Inequality):} For functions with decay at infinity: $D \geq c_P E$.
-
-The uniform bound $c_P > 0$ follows from physical constraints: the maximum principle $|\tilde{\eta}| \leq M$ and bounded energy together constrain the effective support radius.
-
-\textbf{Step 3 (Differential Inequality):} For $\tau$ large enough:
+\textbf{Step 2 (Gaussian Measure):} Define the weighted measure:
 \[
-\frac{dE}{d\tau} \leq -c' \nueff(\tau) E
+d\mu_\tau = Z_\tau^{-1} \exp\left(-\frac{\alpha|y|^2}{2\nueff(\tau)}\right) \rho^3 \, d\rho\, d\zeta
+\]
+In the space $L^2(d\mu_\tau)$, the operator $\mathcal{A} = \nueff \tilde{\mathcal{L}} + \alpha(y \cdot \nabla)$ is self-adjoint.
+
+\textbf{Step 3 (Spectral Gap):} By the Bakry-\'Emery criterion \cite{BakryEmery1985}, the operator $\mathcal{A}$ has spectral gap $\lambda_1 = \alpha > 0$, \emph{independent} of $\nueff$. This gives the weighted Poincar\'e inequality:
+\[
+\int |\nabla\tilde{\eta}|^2 d\mu \geq \alpha \int |\tilde{\eta} - \langle\tilde{\eta}\rangle|^2 d\mu
 \]
 
-\textbf{Step 4 (Integration):} Since $\int \nueff\, ds$ grows exponentially, $E(\tau)$ decays super-exponentially.
+\textbf{Step 4 (Energy Decay):} For the weighted energy $E_\mu = \int |\tilde{\eta}|^2 d\mu$:
+\[
+\frac{dE_\mu}{d\tau} \leq -2\alpha \nueff(\tau) E_\mu + C E_\mu
+\]
+where the advection term is controlled by $|\tilde{V}|_{L^\infty} \leq C$.
+
+\textbf{Step 5 (Integration):} For $\tau$ large, $2\alpha\nueff \gg C$, so:
+\[
+E_\mu(\tau) \leq E_\mu(0) \exp\left(-\alpha \int_0^\tau \nueff(s)\, ds\right)
+\]
+Since $\int_0^\tau \nueff(s)\, ds \sim \frac{\nu}{2(1-\alpha)} e^{2(1-\alpha)\tau}$, the decay is \emph{super-exponential}.
 \end{proof}
+
+\begin{remark}
+The spectral gap argument is crucial: a naive Poincar\'e inequality would fail because the solution's effective support expands as $\nueff$ grows. The drift term's confinement compensates for this spreading, yielding a uniform spectral gap $\lambda_1 = \alpha$.
+\end{remark}
 
 \begin{theorem}[Pointwise Decay]\label{thm:Linfty}
 $\norm{\tilde{\eta}(\tau)}_{L^\infty} \to 0$ as $\tau \to \infty$.
@@ -385,11 +418,15 @@ The Hou-Luo numerical studies suggest finite-time blowup for axisymmetric \emph{
 
 \begin{thebibliography}{99}
 
+\bibitem{BakryEmery1985} D. Bakry, M. \'Emery. \emph{Diffusions hypercontractives.} S\'eminaire de probabilit\'es XIX, Lecture Notes in Math. 1123, Springer (1985), 177--206.
+
 \bibitem{CKN1982} L. Caffarelli, R. Kohn, L. Nirenberg. \emph{Partial regularity of suitable weak solutions of the Navier-Stokes equations.} Comm. Pure Appl. Math. 35 (1982), 771--831.
 
 \bibitem{CSYT2009} C.-C. Chen, R.M. Strain, T.-P. Tsai, H.-T. Yau. \emph{Lower bounds on the blow-up rate of the axisymmetric Navier-Stokes equations II.} Comm. Partial Differential Equations 34 (2009), 203--232.
 
 \bibitem{ChaeWolf2016} D. Chae, J. Wolf. \emph{On Liouville type theorems for the steady Navier-Stokes equations.} J. Differential Equations 261 (2016), 5541--5560.
+
+\bibitem{ESS2003} L. Escauriaza, G. Seregin, V. \v{S}ver\'ak. \emph{$L^{3,\infty}$-solutions of Navier-Stokes equations and backward uniqueness.} Russian Math. Surveys 58 (2003), 211--250.
 
 \bibitem{HouLuo2014} T. Hou, G. Luo. \emph{Potentially singular solutions of the 3D axisymmetric Euler equations.} Proc. Natl. Acad. Sci. 111 (2014), 12968--12973.
 

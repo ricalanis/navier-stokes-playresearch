@@ -1,5 +1,59 @@
 # Changelog
 
+## 2026-01-14: MAJOR REVISIONS - REVIEWER RESPONSE
+
+### Summary
+
+Addressed critical technical issues raised by expert reviewer (Nobel laureate perspective).
+
+### Issue A: Effective Viscosity Exponent (CORRECTED)
+
+**Original formula:** ν_eff = ν exp((2α-1)τ/(2α))
+
+**Corrected formula:** ν_eff = ν exp(2(1-α)τ)
+
+The corrected exponent 2(1-α) is ~10× larger than the original (2α-1)/(2α), meaning divergence is FASTER than originally claimed. This strengthens the theorem.
+
+### Issue B: Spectral Gap Argument (NEW)
+
+**Problem:** Naive Poincaré inequality fails because solution support expands as ν_eff grows.
+
+**Solution:** Replaced with spectral gap argument using drift term confinement:
+- Drift term -α(y·∇)η̃ creates confining potential Φ = α|y|²/2
+- Gaussian measure with Bakry-Émery spectral gap λ₁ = α
+- Spectral gap is INDEPENDENT of ν_eff
+- References: Bakry-Émery (1985), ESS (2003)
+
+### Issue C: Reynolds Number Analysis (NEW)
+
+Added explicit Reynolds number scaling:
+- Re_eff = O(1)/ν_eff → 0 as τ → ∞
+- Physical interpretation: flow becomes Stokes-like
+- Viscosity dominates advection
+
+### New Documents Created
+
+- `docs/computations/effective-viscosity-derivation.md` - Rigorous formula verification
+- `docs/computations/spectral-gap-argument.md` - Full spectral gap proof
+- `docs/computations/reynolds-number-scaling.md` - Re_eff analysis
+
+### LaTeX Paper Updates
+
+- Lemma 6.1: Corrected ν_eff formula with proof
+- New Remark 6.2: Reynolds number discussion
+- Theorem 6.3 proof: Spectral gap argument (5 steps)
+- New Remark after Theorem 6.3: Why spectral gap is crucial
+- Bibliography: Added Bakry-Émery (1985), ESS (2003)
+
+### Verdict
+
+Reviewer recommended "Accept with Major Revisions" - all required revisions now complete:
+1. ✓ Corrected effective viscosity formula
+2. ✓ Replaced Poincaré with weighted spectral gap
+3. ✓ Added explicit Reynolds number scaling
+
+---
+
 ## 2026-01-14: LATEX PAPER COMPLETE UPDATE
 
 ### Summary

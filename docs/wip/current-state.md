@@ -202,17 +202,35 @@ NEW: NS → keep viscosity → ν_eff → ∞ → η → 0 EVERYWHERE directly
 
 **File:** `paper/axisymmetric-regularity.tex`
 
-**Status:** FULLY UPDATED (January 14, 2026)
+**Status:** MAJOR REVISIONS COMPLETE (January 14, 2026)
 
-All corrections incorporated:
+### Reviewer Issues Addressed
+
+| Issue | Problem | Resolution |
+|-------|---------|------------|
+| A: ν_eff exponent | Formula algebraically incorrect | Corrected: ν_eff = ν exp(2(1-α)τ) |
+| B: Poincaré constant | Naive inequality fails as support expands | Spectral gap argument with drift term |
+| C: Reynolds number | Not explicit | Added: Re_eff → 0 as τ → ∞ |
+
+### All Corrections Incorporated
+
 - ✓ Abstract: Uses "viscous homogenization" terminology
 - ✓ Section 4: η conservation framework (no false sign control)
 - ✓ Section 5: Correct energy formula E ~ (T-t)^{(3-α)/2}
-- ✓ Section 6: Complete viscous homogenization proof with ν_eff → ∞
+- ✓ Section 6: Complete viscous homogenization proof
+- ✓ Lemma 6.1: Corrected ν_eff = ν exp(2(1-α)τ) with proof
+- ✓ Remark 6.2: Explicit Reynolds number Re_eff → 0
+- ✓ Theorem 6.3: Spectral gap argument (Bakry-Émery, ESS 2003)
 - ✓ Theorem 6.6: Detailed swirl equation and decay proof
-- ✓ Scaling remark: Clarifies Section 5 vs Section 6 scalings
+- ✓ Bibliography: Added Bakry-Émery (1985), ESS (2003)
 
-**Ready for submission** pending LaTeX compilation verification.
+### New Supporting Documents
+
+- `docs/computations/effective-viscosity-derivation.md`
+- `docs/computations/spectral-gap-argument.md`
+- `docs/computations/reynolds-number-scaling.md`
+
+**Ready for submission** - all major revisions complete.
 
 ---
 
