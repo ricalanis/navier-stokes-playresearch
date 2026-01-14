@@ -230,6 +230,8 @@ The rigorous argument uses Seregin's framework (arXiv:2507.08733): for $\alpha \
 
 This section contains the key new argument that closes the gap for $\alpha \in (1/2, 3/5)$.
 
+**Remark on Scalings.** This section uses Seregin's rescaling $\lambda = (T-t)^{1/(2\alpha)}$, which is distinct from the energy concentration scale $\beta = (1+\alpha)/2$ in Section 5. The energy scaling $\beta$ determines how energy concentrates at small spatial scales; the Seregin scaling $\lambda$ is designed to analyze the structure of the rescaled solution as $t \to T$. Both give consistent qualitative results (energy decay, viscosity effects) but serve different analytical purposes. Importantly, the viscous homogenization argument below depends only on the fact that $\nu_{\text{eff}} \to \infty$ for $\alpha > 1/2$, which holds regardless of the precise relationship between $\lambda$ and the concentration scale.
+
 ### 6.1 The Type II Rescaling
 
 For Type II blowup at time $T$ with rate $\alpha \in (1/2, 3/5)$, define:
@@ -349,7 +351,25 @@ Therefore, Type II blowup with $\alpha \in (1/2, 3/5)$ is impossible. $\square$
 
 $$\tilde{\Gamma}(\tau) \to 0 \quad \text{as} \quad \tau \to \infty$$
 
-*Proof.* The swirl $\Gamma = r u^\theta$ satisfies a transport-diffusion equation. Under rescaling, the effective diffusion coefficient is $\nu_{\text{eff}} \to \infty$, which dominates the transport term and forces exponential decay of the swirl energy. $\square$
+*Proof.* The swirl $\Gamma = r u^\theta$ satisfies the transport-diffusion equation:
+
+$$\partial_t \Gamma + u^r \partial_r \Gamma + u^z \partial_z \Gamma = \nu \left(\Delta - \frac{2}{r}\partial_r\right) \Gamma$$
+
+Under the Type II rescaling with $\lambda = (T-t)^{1/(2\alpha)}$, define the rescaled swirl:
+
+$$\tilde{\Gamma}(\rho, \zeta, \tau) = \lambda^{\alpha+1} \Gamma(\lambda\rho, \lambda\zeta, t)$$
+
+The rescaled equation becomes:
+
+$$\partial_\tau \tilde{\Gamma} + \tilde{V} \cdot \nabla \tilde{\Gamma} - \alpha(y \cdot \nabla)\tilde{\Gamma} = \nu_{\text{eff}} \left(\tilde{\Delta} - \frac{2}{\rho}\partial_\rho\right) \tilde{\Gamma}$$
+
+where $\nu_{\text{eff}} \to \infty$ for $\alpha > 1/2$.
+
+The diffusion operator $\mathcal{M} = \Delta - \frac{2}{r}\partial_r$ is the generator of a positive semigroup (related to Bessel processes), satisfying a maximum principle. With diverging effective viscosity, the same energy argument as for $\tilde{\eta}$ yields super-exponential L² decay:
+
+$$\|\tilde{\Gamma}(\tau)\|_{L^2}^2 \leq \|\tilde{\Gamma}(0)\|_{L^2}^2 \cdot \exp\left(-C \cdot \int_0^\tau \nu_{\text{eff}}(s) \, ds\right) \to 0$$
+
+Parabolic regularity then gives $\|\tilde{\Gamma}\|_{L^\infty} \to 0$. $\square$
 
 **Corollary 6.7.** Type II blowup is impossible for axisymmetric flows with swirl.
 

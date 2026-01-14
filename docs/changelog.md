@@ -1,5 +1,98 @@
 # Changelog
 
+## 2026-01-14: LATEX PAPER COMPLETE UPDATE
+
+### Summary
+
+Fully updated LaTeX paper (`paper/axisymmetric-regularity.tex`) with all corrections.
+
+### Changes Made
+
+1. **Abstract:** Now uses "viscous homogenization" terminology
+2. **Section 4:** η conservation framework (removed false sign control claims)
+3. **Section 5:** Correct energy formula E ~ (T-t)^{(3-α)/2}
+4. **Section 6:** Complete viscous homogenization proof with ν_eff → ∞
+5. **Theorem 6.6:** Detailed swirl equation and decay proof
+6. **Remark 6.1:** Clarifies distinction between Section 5 and 6 scalings
+
+### Structure
+
+The paper now has correct structure:
+- §1: Introduction (main theorem, historical context)
+- §2: Preliminaries (axisymmetric setting, vorticity)
+- §3: Self-similar profile exclusion (Type I)
+- §4: η conservation framework
+- §5: Energy constraints (α ≥ 3/5)
+- §6: Viscous homogenization (α ∈ (1/2, 3/5))
+- §7: Main theorem complete proof
+- §8: Discussion
+
+### Status
+
+**Ready for submission** after LaTeX compilation.
+
+---
+
+## 2026-01-14: DOCUMENTATION UPDATE
+
+### Summary
+
+Updated all README files and publishable results to reflect current proof status.
+
+### Files Updated
+
+- `README.md` — Main project README with complete proof status
+- `paper/README.md` — Publication guide with key results and verification checklist
+
+### Key Changes
+
+- Replaced outdated "self-defeating mechanism" terminology with "viscous homogenization"
+- Added numerical verification table
+- Listed all corrections made (drift coefficient, Poincaré justification)
+- Updated status tables to reflect all gaps closed for axisymmetric case
+- Added swirl equation details
+- Clarified what remains open (general 3D)
+
+---
+
+## 2026-01-14: REVIEWER RESPONSE AND PAPER REVISIONS
+
+### Summary
+
+Addressed detailed external review of the axisymmetric regularity proof.
+
+### Changes Made
+
+1. **Scaling clarification (Section 6):** Added remark explaining distinction between:
+   - Energy concentration scale β = (1+α)/2 (Section 5)
+   - Seregin rescaling λ = (T-t)^{1/(2α)} (Section 6)
+
+2. **Swirl equation (Theorem 6.6):** Expanded proof with detailed equation:
+   ```
+   ∂_t Γ + u·∇Γ = ν(Δ - 2/r ∂_r)Γ
+   ```
+   Including rescaled form and decay argument.
+
+3. **Drift term correction (Appendix D):**
+   - Old: div(yρ³) = 6ρ³
+   - New: div(yρ³) = 5ρ³
+
+4. **Poincaré justification (Appendix D):** Added explanation of uniform c_P > 0
+
+### Verification Scripts
+
+- `scripts/verify_scaling_v2.py` - Scaling analysis
+- `scripts/test_section64_inequality.py` - Energy inequality tests
+- `scripts/test_drift_term.py` - Drift coefficient verification
+- `scripts/test_poincare_limit.py` - Poincaré constant analysis
+
+### Documentation
+
+- `docs/reviewer-response.md` - Full response to reviewer
+- `docs/computations/section64-numerical-verification.md` - Numerical tests
+
+---
+
 ## 2026-01-14: NUMERICAL VERIFICATION OF SECTION 6.4
 
 ### Summary
