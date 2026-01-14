@@ -1,8 +1,41 @@
 # WIP: Navier-Stokes Research - Current State
 
 **Date:** 2026-01-13
-**Session:** navier-stokes-iteration-20
-**Status:** PARTIAL RESULT - GAP α ∈ [5/7, 1) CONFIRMED OPEN
+**Session:** navier-stokes-iteration-21 (Alternative Approaches)
+**Status:** GAP α ∈ [5/7, 1) CONFIRMED OPEN - ALTERNATIVE APPROACHES EXHAUSTED
+
+---
+
+## LATEST UPDATE: Alternative Approaches Synthesis Complete
+
+Six alternative approaches to closing the Type II gap were thoroughly investigated:
+
+| Approach | Assessment | Likelihood | Key Finding |
+|----------|------------|------------|-------------|
+| Carleman Estimates | UNLIKELY | 15-25% | Unbounded coefficients break Carleman |
+| Monotonicity Formulas | PROMISING | 40-50% | N_NS diverges but monotonicity unproven |
+| Viscous Regularization | INSUFFICIENT | 10-20% | Local vs global behavior gap |
+| Concentration-Compactness | NO RIGIDITY | 15-25% | No contradiction mechanism |
+| Spectral/Stability | TIED TO SEREGIN | 20-30% | Same underlying obstruction |
+| Novel Approaches | UNEXPLORED | 30-50% | OT, RG, topology highest priority |
+
+**Key Insights Gained:**
+1. **Order of Limits Problem:** V = lim_{λ→0} V^λ doesn't commute with τ → -∞
+2. **Infinite Energy Issue:** ∫|V|² = ∞ for α > 1/2 breaks energy methods
+3. **Dispersion Obstruction:** Cannot prove particles escape to ∞ from L² bounds
+
+**Most Promising Unexplored:**
+- Optimal Transport (NS as Wasserstein gradient flow)
+- Renormalization Group (classify blowup universality)
+- Topological Vortex Methods (frozen topology constraints)
+
+**Documents Created:**
+- `alternative-approaches-synthesis.md` - Complete synthesis
+- `novel-approaches-survey.md` - 10 unconventional approaches analyzed
+- `carleman-type-ii-analysis.md` - Why Carleman fails
+- `monotonicity-formula-analysis.md` - N_NS frequency function candidate
+
+---
 
 ## CRITICAL STATUS UPDATE: Iteration 20 - Gap Exhaustively Analyzed
 

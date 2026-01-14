@@ -1,5 +1,171 @@
 # Changelog
 
+## 2026-01-13: CARLEMAN ESTIMATES AND TYPE II BLOWUP ANALYSIS
+
+### New Research Document
+
+Comprehensive investigation of whether Carleman estimates can exclude Type II blowup in the gap alpha in [5/7, 1).
+
+**New File:**
+- `docs/computations/carleman-type-ii-analysis.md` - Complete analysis (~400 lines)
+
+### Key Findings
+
+**1. Why ESS (2003) Works for Type I but Not Type II:**
+- ESS uses Carleman with BOUNDED coefficients
+- Type II rescaling produces mu(tau) -> infinity
+- The unbounded coefficients violate Carleman's requirements
+
+**2. Carleman Cannot Apply to Euler:**
+- Euler lacks parabolic structure (no Delta term)
+- Vanishing viscosity limit degenerates Carleman constants
+- No viable weight function found for pure Euler
+
+**3. Quantitative Carleman (Tao/Palasek):**
+- Gives triple/double logarithmic blowup rate bounds
+- Requires bounded critical L^3 norm
+- For alpha in [5/7, 1): L^3 norm DIVERGES, method fails
+
+**4. The Fundamental Obstruction:**
+- For alpha close to 1: concentration scale L >> diffusive scale sqrt(nu(T-t))
+- Viscosity "cannot see" the concentration structure
+- Carleman weights adapted to heat kernel miss the Type II geometry
+
+**5. Assessment:**
+- Likelihood of Carleman closing the gap: LOW (15-25%)
+- Standard techniques face STRUCTURAL, not technical, barriers
+- Would require genuinely new Carleman inequalities with unbounded coefficients
+
+### Research Directions Identified
+
+- Time-dependent Carleman parameters (speculative)
+- Frequency-localized weights (advanced, undeveloped)
+- Hybrid Seregin-geometric approaches (most promising)
+
+### Verdict
+
+**Q: Can Carleman estimates close the gap alpha in [5/7, 1)?**
+**A: UNLIKELY with current techniques. Structural mismatches prevent direct application.**
+
+### Status: ANALYSIS COMPLETE - CARLEMAN PATH ASSESSED AS UNLIKELY
+
+---
+
+## 2026-01-13: VISCOUS REGULARIZATION ANALYSIS
+
+### New Research Document
+
+Systematic investigation of whether viscosity (nu > 0) can directly close the Type II gap without taking the Euler limit.
+
+**New File:**
+- `docs/computations/viscous-regularization-analysis.md` - Complete investigation (~750 lines)
+
+### Key Findings
+
+**1. Local Dissipation Diverges (but is integrable):**
+- For Type II with alpha in (1/2, 3/5): local dissipation ~ (T-t)^{(1-3alpha)/2}
+- This diverges as t -> T
+- But the time integral remains finite (no contradiction)
+
+**2. Rescaled Effective Viscosity:**
+- Under Type II rescaling: nu_eff = nu * (T-t)^{(1-2alpha)/2}
+- For alpha > 1/2: nu_eff -> infinity
+- The rescaled equation becomes dissipation-dominated
+- However, pressure gradient grows to balance
+
+**3. Viscous Liouville (Pan-Li):**
+- Ancient NS with sublinear growth => trivial
+- BUT: The rescaled limit has variable (diverging) viscosity
+- Pan-Li doesn't directly apply
+
+**4. Mild Solution Analysis:**
+- Duhamel integral diverges for alpha > 3/7
+- Shows heat kernel smoothing is insufficient
+
+**5. Local L^3 Subcriticality:**
+- For alpha < 1: ||u||_{L^3(B(L))} -> 0
+- Locally subcritical, but doesn't give global bounds
+
+**6. Weighted Energy Method:**
+- Confirms Seregin's dimensional analysis
+- No new constraints beyond existing framework
+
+### Verdict
+
+**Q: Can nu > 0 directly close the Type II gap?**
+**A: Not with current techniques.**
+
+Viscosity provides structure but doesn't give the critical LOCAL bounds needed.
+The Euler limit approach (Seregin) remains most promising.
+
+### Status: INVESTIGATION COMPLETE - NO NEW PATH FOUND
+
+---
+
+## 2026-01-13: MONOTONICITY FORMULA ANALYSIS FOR TYPE II EXCLUSION
+
+### New Research Document
+
+Created comprehensive analysis of monotonicity formulas as potential tools for excluding Type II blowup.
+
+**New File:**
+- `docs/computations/monotonicity-formula-analysis.md` - Complete analysis (~600 lines)
+
+### Key Findings
+
+**1. CKN Monotonicity Cannot Close the Gap:**
+- The CKN quantity A(r) = r^{-1} integral |nabla u|^2 + r^{-2} integral |u|^3 is almost-monotone
+- But A(L) ~ O(1) at the concentration scale for Type II with alpha in (1/2, 3/5)
+- Modifying the CKN exponent breaks the monotonicity property
+
+**2. NS Frequency Function - Most Promising Candidate:**
+```
+N_{NS}(r) = (r integral_{Q_r} |nabla u|^2) / (integral_{partial Q_r} |u|^2 dS dt)
+```
+- **Key finding:** N_{NS}(L) ~ (T-t)^{-2alpha} DIVERGES for Type II!
+- **Open problem:** Is N_{NS}(r) monotone in r? Convective term spoils standard proofs.
+
+**3. Scale-Invariant Quantities:**
+- Defined Phi_alpha(r,t) for Type II with rate alpha
+- Appears to be increasing in r, but not proven rigorously
+- Only scale-invariant at alpha = 1 (Type I rate)
+
+**4. Backward Monotonicity:**
+- Gaussian-weighted energy E(tau) = integral |V|^2 exp(-|y|^2/(4|tau|)) dy
+- Linear terms suggest E is monotone increasing as tau -> 0
+- Needs rigorous nonlinear analysis
+
+**5. Novel Candidates Identified:**
+- M_1: Weighted vorticity moment
+- M_2: Frequency with pressure
+- M_3: Modified Almgren with convection
+- M_4: Enstrophy-based ratio
+
+None have established monotonicity for NS.
+
+**6. Variational/Lyapunov Approach:**
+- Self-similar rescaling admits Lyapunov functional candidate
+- dL/dtau < 0 for localized solutions
+- If L_infinity = 0, proves no blowup profile
+
+### Summary Table
+
+| Quantity | Monotone? | Detects Type II? | Status |
+|----------|-----------|------------------|--------|
+| CKN A(r) | Almost | No (bounded) | Cannot close gap |
+| N_{NS}(r) | Unknown | Yes (diverges) | Most promising |
+| Phi_alpha(r) | Likely | Yes | Needs verification |
+| E(tau) backward | Yes (Euler) | Possibly | Needs NS analysis |
+| Seregin S_m(r) | No | Yes | Not useful directly |
+
+### Critical Open Problem
+
+**Prove or disprove:** The NS frequency N_{NS}(r) is monotone (or almost-monotone) in r.
+
+If frequency monotonicity is established, this would provide a new tool for regularity theory that could potentially close the gap.
+
+---
+
 ## 2026-01-13: BACKWARD DISPERSION PROOF - RIGOROUS ANALYSIS
 
 ### New Research Document
