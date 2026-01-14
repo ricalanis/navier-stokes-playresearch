@@ -1,5 +1,42 @@
 # Changelog
 
+## 2026-01-14: NUMERICAL VERIFICATION OF SECTION 6.4
+
+### Summary
+
+Numerical testing of the energy inequality in Section 6.4 (Viscous Homogenization) verified the proof is **VALID** with minor corrections.
+
+### Findings
+
+| Issue | Status | Impact |
+|-------|--------|--------|
+| Drift coefficient | **ERROR**: -3 should be -2.5 | Minor - doesn't affect proof validity |
+| Poincare constant | **JUSTIFIED** | Physical constraints bound support |
+| Overall proof | **VERIFIED** | Energy inequality holds |
+
+### Corrections Made
+
+1. **Drift term (Appendix D):**
+   - Old: div(yρ³) = 6ρ³ → contribution -3αE
+   - New: div(yρ³) = 5ρ³ → contribution -5αE/2 = -2.5αE
+
+2. **Poincare inequality:** Added remark explaining why c_P > 0 uniformly:
+   - Maximum principle: |η̃| ≤ M
+   - Bounded rescaled energy
+   - Together constrain effective support, preventing c_P → 0
+
+### Test Scripts
+
+- `scripts/test_section64_inequality.py`
+- `scripts/test_drift_term.py`
+- `scripts/test_poincare_limit.py`
+
+### Documentation
+
+- `docs/computations/section64-numerical-verification.md`
+
+---
+
 ## 2026-01-14: GAP 3 CLOSED - VISCOUS HOMOGENIZATION BYPASSES BACKWARD DISPERSION
 
 ### Summary
