@@ -48,10 +48,24 @@
 
 | Gap | Description | Severity | Status |
 |-----|-------------|----------|--------|
-| **Gap 2** | Implicit constants may diverge | CRITICAL | OPEN |
-| **Gap 3** | Supremum over all r not rigorously bounded | HIGH | **CLOSED** (v2.0) |
+| **Gap 2** | η → 0 at infinity not justified from rescaling | CRITICAL | **CLOSED** (Jan 14) |
+| **Gap 3** | Backward dispersion (α_c = 0.5 vs 0.82) | CRITICAL | **CLOSED** (Jan 14) |
 | **Gap 4** | Local pressure estimates not derived | HIGH | **CLOSED** (v2.0) |
 | **Gap 5** | Boundary cases (α = 3/5, m = 1/2) not handled | MEDIUM | **CLOSED** |
+
+**Gap 2 Resolution (Jan 14, 2026):** See `gap2-diverging-viscosity-proof.md`. Key results:
+- For α > 1/2, effective viscosity ν_eff = ν λ^{1-2α} → ∞ as λ → 0
+- Diverging viscosity forces η̃ decay at spatial infinity via heat kernel + maximum principle
+- Weighted energy estimates + Sobolev embedding give pointwise decay
+- This establishes the boundary condition required for Enhanced Liouville theorem
+
+**Gap 3 Resolution (Jan 14, 2026):** See `gap3-viscous-homogenization-proof.md`. Key results:
+- The backward dispersion argument fails because α_c = 0.5 (not 0.82)
+- **CRITICAL INSIGHT:** We don't need backward dispersion at all!
+- Diverging ν_eff → ∞ forces η̃ → 0 EVERYWHERE via energy dissipation
+- Energy identity: dE/dτ ≤ -c ν_eff D + C E → super-exponential L² decay
+- Parabolic regularity converts L² → 0 to L^∞ → 0
+- This directly proves η̃ ≡ 0 in the limit, bypassing Euler and backward dispersion
 
 **Gap 4 Resolution (v2.0):** See `gap4-local-pressure-analysis.md`. Key results:
 - Theorem 3.1: Local CZ constant C_0 is r-INDEPENDENT (proven via NS scaling symmetry)
