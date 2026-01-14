@@ -1,5 +1,97 @@
 # Changelog
 
+## 2026-01-14: MCTS PROOF EXPLORER IMPLEMENTATION
+
+### Summary
+
+Implemented Monte Carlo Tree Search system for exploring and validating the proof, based on AlphaProof and HILBERT research.
+
+### Key Research Findings
+
+- AlphaProof achieved IMO 2024 silver medal using MCTS + RL + Lean verification
+- HILBERT (Apple) achieves 99.2% on miniF2F using LLM + formal verification
+- Chen-Hou 3D Euler blowup uses computer-assisted proof methodology
+- MCTS can systematically search for counterexamples and alternative proof paths
+
+### Implementation (`src/mcts/`)
+
+| Module | Purpose |
+|--------|---------|
+| `state.py` | Proof state with lemma tracking, dependency graphs |
+| `actions.py` | 30+ proof tactics (APPLY_LEMMA, RESCALE, etc.) |
+| `rewards.py` | Multi-objective scoring (completeness, consistency) |
+| `tree.py` | MCTS tree with UCB selection |
+| `search.py` | Parallel proof exploration |
+| `oracles.py` | Numerical/symbolic verification integration |
+
+### Theorem Registry
+
+Encodes complete proof structure:
+- `main_theorem` depends on Type I, Type II (gap), Type II (high)
+- `type_ii_exclusion_gap` depends on spectral gap, L2 decay, pointwise decay
+- `spectral_gap_lemma` depends on Bakry-Émery criterion
+
+### Usage
+
+```python
+from src.mcts.search import ProofMCTS
+mcts = ProofMCTS(config)
+mcts.initialize()
+best_path = mcts.search()
+```
+
+### Files Created
+
+- `src/mcts/*.py` - Full MCTS implementation
+- `docs/computations/lean-mcts-validation-strategy.md` - Validation roadmap
+- `paper/docs/mcts-proof-explorer-design.md` - Technical specification
+
+---
+
+## 2026-01-14: LEAN 4 FORMALIZATION ANALYSIS
+
+### Summary
+
+Analyzed feasibility of formalizing the core proof components in Lean 4 with mathlib4.
+
+### Key Findings
+
+| Component | Formalizable? | Difficulty | Time Estimate |
+|-----------|---------------|------------|---------------|
+| Effective Viscosity Divergence | **YES** | Low | 1-2 days |
+| Super-Exponential Decay (Gronwall) | Partially | Medium | 1-2 weeks |
+| Energy Identity | Partially | Medium-High | 2-4 months |
+| Spectral Gap Lemma | No | High | 6-12 months |
+| Maximum Principle for η | No | Very High | 1-2 years |
+
+### Major Gaps in Mathlib4
+
+1. **No multi-dimensional Gaussian measure** - only 1D exists
+2. **No unbounded operator spectral theory** - only bounded operators
+3. **No PDE infrastructure** - no Sobolev spaces, no maximum principles
+4. **No parabolic equation theory** - heat equation not formalized
+
+### Immediately Formalizable
+
+The effective viscosity divergence theorem is fully ready:
+```lean
+theorem effectiveViscosity_tendsto_atTop (hν : 0 < ν) (hα : α < 1) :
+    Filter.Tendsto (effectiveViscosity ν α) Filter.atTop Filter.atTop
+```
+
+### Recommended Strategy
+
+1. **Phase 1 (1-2 weeks):** Formalize effective viscosity and Gronwall application
+2. **Phase 2 (1-2 months):** Axiomatic approach - state hard analysis as axioms, prove logical structure
+3. **Phase 3 (optional, multi-year):** Build full PDE infrastructure
+
+### Files Created
+
+- `paper/lean4-formalization.lean` - Lean 4 code with all components
+- `paper/lean4-formalization-analysis.md` - Detailed analysis document
+
+---
+
 ## 2026-01-14: MAJOR REVISIONS - REVIEWER RESPONSE
 
 ### Summary
