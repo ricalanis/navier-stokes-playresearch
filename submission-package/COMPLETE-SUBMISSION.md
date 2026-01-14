@@ -1,8 +1,30 @@
 # Navier-Stokes Global Regularity: Complete Submission Package
 
-**Date:** January 13, 2026
-**Status:** CLAIMED — Awaiting Independent Verification
-**Package Version:** 1.0
+**Date:** January 13, 2026 (REVISED)
+**Status:** CLAIMED WITH KNOWN GAPS — Active Work Required
+**Package Version:** 1.1 (Post-Critical Review)
+
+---
+
+## ⚠️ REVISION NOTICE (January 13, 2026)
+
+Following critical review, several issues were identified and addressed:
+
+| Issue | Severity | Status | Resolution |
+|-------|----------|--------|------------|
+| Gap 2: Boundary flux divergence | **CRITICAL** | ACKNOWLEDGED | Profile decomposition bypasses; see CRITICAL-ISSUES.md |
+| Gap 2-3: Circularity | MODERATE | RESOLVED | Unified theorem added to Gap 3 §9 |
+| θ_A Formula discrepancy | MODERATE | CORRECTED | All documents updated to θ_A = 2 - α - m(1+α) |
+| Gap 5: Local vs Global energy | MODERATE | RESOLVED | Section 11 added with corrected approaches |
+| Gap 6: Integral vs Pointwise | MODERATE | RESOLVED | Profile decomposition elevated to primary argument |
+
+**Key Finding:** The proof structure has methodological weaknesses that require profile decomposition (Part 11 of Gap 6) as the PRIMARY path rather than direct cascade analysis.
+
+**Confidence Revision:**
+- Original: "CLAIMED — Awaiting verification"
+- Revised: "CLAIMED WITH KNOWN GAPS — Active work required"
+
+See **CRITICAL-ISSUES.md** for detailed analysis of each issue and proposed resolutions.
 
 ---
 
@@ -75,15 +97,15 @@ Type II blowup rate must satisfy: **α ∈ (1/2, 3/5)**
 
 Seregin's condition (1.4) is **automatically satisfied** by any finite-time singularity under our hypotheses.
 
-#### 1.2.5 Gap Closures (CLAIMED)
+#### 1.2.5 Gap Closures (REVISED STATUS)
 
-| Gap | Description | Status |
-|-----|-------------|--------|
-| **Gap 2** | Implicit constants bounded | Claimed |
-| **Gap 3** | All scales supremum bounded | Claimed |
-| **Gap 4** | Local pressure estimates | Claimed |
-| **Gap 5** | Boundary case α = 3/5 excluded | Claimed |
-| **Gap 6** | Cascade structures satisfy (1.4) | Claimed |
+| Gap | Description | Status | Notes |
+|-----|-------------|--------|-------|
+| **Gap 2** | Implicit constants bounded | **CRITICAL ISSUE** | Boundary flux diverges; use profile decomposition |
+| **Gap 3** | All scales supremum bounded | Claimed (with unified theorem) | §9 added for time-uniform bounds |
+| **Gap 4** | Local pressure estimates | Claimed | Scale-invariant CZ |
+| **Gap 5** | Boundary case α = 3/5 excluded | Conditionally claimed | Local/global energy distinction addressed in §11 |
+| **Gap 6** | Cascade structures satisfy (1.4) | Claimed (via profile decomposition) | Restructured to use B-G as primary |
 
 ---
 

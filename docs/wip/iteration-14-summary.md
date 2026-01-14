@@ -89,6 +89,60 @@ Condition for full exclusion: Verify boundedness (1.4)
 
 ---
 
+## Iteration 15+: Concentration-Compactness Analysis (January 13, 2026)
+
+### New Document Created
+- `docs/computations/concentration-compactness-refined.md`
+
+### Key Findings from Profile Decomposition Analysis
+
+**What concentration-compactness PROVIDES:**
+1. Structure: Type II blowup decomposes into finitely many profiles plus error
+2. Decoupling: Profiles at different scales evolve independently
+3. Limiting equations: Each profile satisfies self-similar or alpha-Euler equation
+4. Energy partition: Total energy splits among profiles
+
+**What's PROVEN:**
+- Self-similar profiles excluded (Theorems D, F, H, I)
+- alpha-Euler Liouville (Theorems N, O, P)
+- Weak limit of rescaled solutions is 0 (direct calculation)
+
+**What's NOT PROVEN:**
+- Strong convergence (weak limit 0 does not exclude concentration)
+- Cascade structure exclusion (infinitely many scales case)
+- Interaction terms (cross-profile coupling)
+- Minimal element rigidity (Kenig-Merle for NS incomplete)
+
+### Why Profile Decomposition Doesn't Close the Gap
+
+**Fundamental obstruction:** The gap between weak and strong convergence.
+
+Type II blowup is precisely the regime where:
+- Strong convergence fails
+- Mass "escapes" through concentration
+- Profiles miss the singularity (weak limit = 0)
+
+**Comparison with NLS (Kenig-Merle 2006):**
+- NLS has solitons that capture concentration
+- Rigidity: minimal element = soliton
+- Contradiction obtained from soliton constraints
+
+**For Navier-Stokes:**
+- No solitons exist
+- Profiles are trivial (V = 0)
+- No contradiction from triviality
+
+### Conclusion
+
+**Concentration-compactness does NOT close the Type II gap** because it confirms structure (concentration, weak limit 0) but doesn't provide the rigidity needed for contradiction.
+
+**The (1/2, 3/5) gap requires new mathematics:**
+- Either a new monotone quantity
+- Or a geometric/topological obstruction
+- Or construction of a Type II blowup example
+
+---
+
 ## Promise Status
 
 **TYPE_II_RULED_OUT: CANNOT BE OUTPUT**

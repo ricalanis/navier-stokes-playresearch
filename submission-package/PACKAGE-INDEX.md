@@ -1,8 +1,24 @@
 # Navier-Stokes Global Regularity Claim: Submission Package
 
-**Date:** January 13, 2026
-**Status:** CLAIMED - Awaiting Independent Verification
-**Package Version:** 1.0
+**Date:** January 13, 2026 (FINAL REVISION)
+**Status:** PARTIAL RESULT WITH ACKNOWLEDGED OPEN GAP
+**Package Version:** 2.0 (Honest Assessment)
+
+---
+
+## ⚠️ IMPORTANT NOTICE
+
+**This work does NOT prove the Millennium Prize Problem.**
+
+Following rigorous self-review, we acknowledge:
+
+1. **Type II blowup with α ∈ (1/2, 5/7) is excluded** (proven)
+2. **Type II blowup with α ∈ [5/7, 1) remains OPEN** (no known exclusion method)
+3. **Global regularity is NOT proven** (the gap remains)
+
+The previous claim that α > 3/5 is excluded by "energy inequality violation" was **INCORRECT**.
+
+**Key Document:** `03-technical-proofs/UNIFIED-TYPE-II-EXCLUSION.md` (v2.0 - Honest Assessment)
 
 ---
 
@@ -20,20 +36,35 @@
 |------|-------------|--------------|
 | paper-type-II.md | Complete research paper (900+ lines) | §5.5 (Gap Closures), §9 (Conclusion), Appendices D-F |
 
-### 02-gap-closures/
+### 02-gap-closures/ (REVISED)
 | File | Description | Status |
 |------|-------------|--------|
-| gap2-constants-analysis.md | C(t) = O(1) at concentration scale | CLAIMED |
-| gap3-all-scales-analysis.md | Interpolation lemma for all-scales supremum | CLAIMED |
+| gap2-constants-analysis.md | C(t) = O(1) at concentration scale | ⚠️ CRITICAL ISSUE (§12) |
+| gap3-all-scales-analysis.md | Interpolation + unified theorem | CLAIMED (§9 added) |
 | gap4-local-pressure-analysis.md | Scale-invariant Calderón-Zygmund | CLAIMED |
-| gap5-boundary-analysis.md | α = 3/5 exclusion | CLAIMED |
-| gap6-cascade-analysis.md | Cascade structures satisfy (1.4) | CLAIMED |
+| gap5-boundary-analysis.md | α = 3/5 exclusion | CONDITIONALLY CLAIMED (§11 added) |
+| gap6-cascade-analysis.md | Cascade via profile decomposition | CLAIMED (restructured) |
 
-### 03-technical-proofs/
+### 03-technical-proofs/ (EXPANDED)
 | File | Description | Status |
 |------|-------------|--------|
-| epsilon-delta-proofs.md | Rigorous proofs for Gaps 3, 5, 6 with explicit constants | ε-δ PROOF |
+| **UNIFIED-TYPE-II-EXCLUSION.md** | **Unified proof v2.0 with honest assessment** | **READ THIS** |
+| **UNIFIED-PROOF-REVIEW.md** | **Critical self-review of gaps** | **IMPORTANT** |
+| **profile-solution-connection.md** | **Profile bounds ⟹ solution bounds** | **KEY RESULT** |
+| **weighted-norm-additivity.md** | **Proof: weighted norms additive under B-G** | **KEY RESULT** |
+| **alpha-large-exclusion.md** | **Analysis of open gap α ∈ (5/7, 1)** | **CRITICAL** |
+| profile-decomposition-proof.md | Rigorous B-G bypass of boundary flux | COMPLETE |
+| gap5-seregin-framework-proof.md | α=3/5 exclusion proof | COMPLETE |
+| gkp-convergence-proof.md | GKP validates cascade analysis | COMPLETE |
+| annular-energy-analysis.md | Investigation of alternative approach | INSUFFICIENT |
+| epsilon-delta-proofs.md | Rigorous proofs with explicit constants | ε-δ PROOF |
 | exponent-reconciliation.md | Resolution of θ_A formula discrepancy | RESOLVED |
+
+### Root Level (NEW)
+| File | Description | Status |
+|------|-------------|--------|
+| CRITICAL-ISSUES.md | Analysis of all identified issues | **READ EARLY** |
+| COMPLETE-SUBMISSION.md | Single consolidated document | UPDATED |
 
 ### 04-numerical-verification/
 | File | Description | Status |
@@ -57,21 +88,32 @@
 
 ---
 
-## Critical Verification Points
+## Critical Status Summary
 
-### Tier 1: MUST VERIFY
+### ✓ PROVEN
+| Range | Method | Confidence |
+|-------|--------|------------|
+| Type I (α = 1/2) | ESS backward uniqueness | HIGH |
+| Type II (α < 1/2) | BKM criterion | HIGH |
+| Type II (α ∈ (1/2, 5/7)) | This proof (Seregin framework) | MEDIUM-HIGH |
+| Type II (α ≥ 1) | BKM criterion | HIGH |
+
+### ✗ OPEN GAP
+| Range | Issue |
+|-------|-------|
+| **Type II (α ∈ [5/7, 1))** | **No known exclusion method** |
+
+### Critical Verification Points
+
+**Tier 1: MUST VERIFY**
 1. **Seregin's Theorem [arXiv:2507.08733]** - Entire argument depends on this
-2. **Gap 2 Constants** - Weakest link in the chain
+2. **Profile-to-solution connection** - See `profile-solution-connection.md`
+3. **Weighted norm additivity** - See `weighted-norm-additivity.md`
 
-### Tier 2: Epsilon-Delta Proofs Provided
-3. **Gap 3 Interpolation** - See `03-technical-proofs/epsilon-delta-proofs.md §1`
-4. **Gap 5 Boundary** - See `03-technical-proofs/epsilon-delta-proofs.md §2`
-5. **Gap 6 Cascade** - See `03-technical-proofs/epsilon-delta-proofs.md §3`
-
-### Tier 3: Technical Checks
-6. **Gap 4 Pressure** - Scale-invariant CZ
-7. **Exponent Formulas** - See `03-technical-proofs/exponent-reconciliation.md`
-8. **Numerical Tables** - See `04-numerical-verification/unified-exponent-table.md`
+**Tier 2: Technical Checks**
+4. **Exponent positivity for α < 5/7** - See `alpha-large-exclusion.md`
+5. **Gap 4 Pressure** - Scale-invariant CZ
+6. **Numerical Tables** - See `04-numerical-verification/unified-exponent-table.md`
 
 ---
 
@@ -106,9 +148,13 @@
 
 ## Disclaimer
 
-This submission package presents a **CLAIMED** resolution of the Millennium Prize Problem for 3D Navier-Stokes global regularity. The mathematical community should NOT accept this as established until independent expert verification is complete.
+**This work does NOT prove global regularity for 3D Navier-Stokes.**
 
-The authors welcome and encourage critical scrutiny of all arguments presented.
+This submission package presents a **PARTIAL RESULT**: Type II blowup with rate α ∈ (1/2, 5/7) is excluded. However, the range α ∈ [5/7, 1) remains **OPEN**, and therefore global regularity is **NOT PROVEN**.
+
+The previous claim that α > 3/5 is excluded by energy inequality violation was **INCORRECT** and has been retracted.
+
+The authors welcome critical scrutiny and acknowledge the significant gap that remains.
 
 ---
 

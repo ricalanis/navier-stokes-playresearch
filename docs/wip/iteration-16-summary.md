@@ -185,3 +185,48 @@ This iteration produced significant progress:
 - Clear path to rigorous proof outlined
 
 **The gap (1/2, 3/5) appears closeable. The question is whether we can convert heuristic arguments into rigorous proof.**
+
+---
+
+## Additional Work: Energy-Enstrophy Liouville (Jan 13, 2026)
+
+### New Document: `docs/computations/energy-liouville-proof.md`
+
+**Goal:** Prove ancient axisymmetric Euler without swirl + growth bound => U = 0
+
+### Key Findings
+
+1. **Material Conservation:** eta = omega^theta / r is materially conserved for axisymmetric Euler without swirl
+
+2. **Conserved Weighted Enstrophy:** Z = integral eta^2 r dr dz is constant in time (derived from material conservation + incompressibility)
+
+3. **Scaling Analysis:** Under Euler scaling lambda:
+   - Energy: E_lambda = lambda^{-1} E
+   - Enstrophy: Z_lambda = lambda Z
+   - Ratio: (Z/E)_lambda = lambda^2 (Z/E)
+
+4. **Conditional Theorem Proved:**
+   ```
+   Ancient axisymmetric Euler (no swirl) + gamma < 1 + dispersion => U = 0
+   ```
+
+### Identified Gap: Dispersion Hypothesis
+
+**The missing piece:** Need to prove that backward particle trajectories disperse (|X(tau)| -> infinity as tau -> -infinity).
+
+**Obstruction:** Hill's spherical vortex is a counterexample (steady, trapped particles). But it may not arise as blowup limit.
+
+### Status
+
+- **PARTIAL SUCCESS:** Rigorous conditional proof
+- **GAP:** Dispersion hypothesis not established
+- **VALUE:** Clarifies role of conservation laws in Liouville theorems
+
+### Relation to Seregin
+
+| Framework | Condition | Range |
+|-----------|-----------|-------|
+| Seregin Prop 4.1 | Carleman + backward uniqueness | m < 3/5 (gamma < 1/5) |
+| Energy-Enstrophy | Conservation + dispersion | gamma < 1 (conditional) |
+
+Our approach is more elementary but conditional on dispersion.

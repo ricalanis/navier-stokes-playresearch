@@ -156,9 +156,39 @@ Numerical evidence suggests (1.4) holds but proof requires new mathematics.
 
 ---
 
+## Additional Analysis: Seregin Rescaling Structure
+
+**New document created:** `docs/computations/seregin-rescaling-structure.md`
+
+### Key Findings on Ancient Euler Limit V
+
+The rescaling procedure imposes four structural obstructions to bounded trajectories:
+
+1. **Energy Obstruction:** V has infinite total energy (E^lambda ~ lambda^{2alpha-3} -> infinity)
+
+2. **Concentration Obstruction:** The blowup core shrinks to a point in rescaled coordinates
+
+3. **Asymptotic Obstruction:** V has power-law behavior |V| ~ |y|^{-alpha} at infinity
+
+4. **Homogeneity Obstruction:** Inherited scaling V(mu y, mu^{1+alpha} tau) = mu^{-alpha} V(y, tau) incompatible with bounded invariant sets
+
+### Implications for Vortex Rings
+
+For axisymmetric Type II blowup:
+- Vortex ring radius shrinks to zero in rescaled coordinates
+- Closed streamlines around vortex core become singular
+- No finite bounded configuration survives the limit
+
+### Gap Remaining
+
+Showing asymptotic constraints force V = 0 (not just ruling out bounded trajectories)
+
+---
+
 ## References
 
 - arXiv:2507.08733 - Seregin Type II exclusion
 - CKN (1982) - Partial regularity
 - Barker-Prange (2021) - Quantitative concentration
 - Our analysis: lemma-1,2,3 documents
+- New: seregin-rescaling-structure.md
