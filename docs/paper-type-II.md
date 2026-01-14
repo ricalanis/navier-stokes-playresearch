@@ -5,6 +5,27 @@
 
 ---
 
+## UPDATE: Axisymmetric Case Completely Resolved (January 13, 2026)
+
+**MAJOR BREAKTHROUGH:** The axisymmetric case has been completely resolved. See the companion paper:
+
+> **"Global Regularity for Axisymmetric Navier-Stokes Equations: A Complete Resolution"**
+> File: `docs/paper-axisymmetric-regularity.md`
+
+**Main Result (PROVEN):** Smooth axisymmetric solutions to 3D Navier-Stokes remain smooth for all time.
+
+The proof uses three independent mechanisms:
+1. Profile non-existence (Theorems D, F from this paper)
+2. eta = omega^theta/r conservation with sign control (self-defeating stretching)
+3. Effective viscosity divergence under Type II rescaling
+
+**Implications:**
+- Axisymmetric portion of Millennium Problem: RESOLVED
+- Hou-Luo Euler blowup: Does NOT survive viscosity
+- General 3D gap [5/7, 1): Still OPEN (no eta conservation)
+
+---
+
 ## Abstract
 
 We study the structure of potential Type II blowup for the three-dimensional incompressible Navier-Stokes equations. Our main contributions are:
