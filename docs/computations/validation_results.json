@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-01-14T08:40:10.571520",
+  "results": [
+    {
+      "test": "effective_viscosity_divergence",
+      "passed": true,
+      "results": [
+        {
+          "alpha": 0.51,
+          "exponent": 0.98,
+          "diverges": true,
+          "nu_eff_at_tau_10": 18033.744927828524,
+          "nu_eff_at_tau_50": 1.9073465724950998e+21
+        },
+        {
+          "alpha": 0.52,
+          "exponent": 0.96,
+          "diverges": true,
+          "nu_eff_at_tau_10": 14764.781565577267,
+          "nu_eff_at_tau_50": 7.016735912097631e+20
+        },
+        {
+          "alpha": 0.55,
+          "exponent": 0.8999999999999999,
+          "diverges": true,
+          "nu_eff_at_tau_10": 8103.083927575384,
+          "nu_eff_at_tau_50": 3.493427105748485e+19
+        },
+        {
+          "alpha": 0.58,
+          "exponent": 0.8400000000000001,
+          "diverges": true,
+          "nu_eff_at_tau_10": 4447.066747699858,
+          "nu_eff_at_tau_50": 1.7392749415205133e+18
+        },
+        {
+          "alpha": 0.59,
+          "exponent": 0.8200000000000001,
+          "diverges": true,
+          "nu_eff_at_tau_10": 3640.9503073323585,
+          "nu_eff_at_tau_50": 6.398434935300549e+17
+        }
+      ]
+    },
+    {
+      "test": "reynolds_number_vanishing",
+      "passed": true,
+      "results": [
+        {
+          "alpha": 0.51,
+          "re_eff_final": 3.074879879586606e-09,
+          "vanishes": "True"
+        },
+        {
+          "alpha": 0.55,
+          "re_eff_final": 1.522997974471263e-08,
+          "vanishes": "True"
+        },
+        {
+          "alpha": 0.59,
+          "re_eff_final": 7.543458349844232e-08,
+          "vanishes": "True"
+        }
+      ]
+    },
+    {
+      "test": "mcts_exploration",
+      "passed": true,
+      "iterations": 1000,
+      "gaps": [],
+      "time_elapsed": 2.4877119064331055
+    },
+    {
+      "test": "counterexample_search",
+      "passed": true,
+      "parameters_tested": 2500,
+      "violations": 0
+    },
+    {
+      "test": "spectral_gap_verification",
+      "passed": true,
+      "results": [
+        {
+          "alpha": 0.51,
+          "eigenvalues": [
+            {
+              "nu": 1.0,
+              "lambda_1": 0.51,
+              "relative_error": 0.0
+            },
+            {
+              "nu": 10.0,
+              "lambda_1": 0.51,
+              "relative_error": 0.0
+            },
+            {
+              "nu": 100.0,
+              "lambda_1": 0.51,
+              "relative_error": 0.0
+            }
+          ]
+        },
+        {
+          "alpha": 0.55,
+          "eigenvalues": [
+            {
+              "nu": 1.0,
+              "lambda_1": 0.55,
+              "relative_error": 0.0
+            },
+            {
+              "nu": 10.0,
+              "lambda_1": 0.55,
+              "relative_error": 0.0
+            },
+            {
+              "nu": 100.0,
+              "lambda_1": 0.55,
+              "relative_error": 0.0
+            }
+          ]
+        },
+        {
+          "alpha": 0.59,
+          "eigenvalues": [
+            {
+              "nu": 1.0,
+              "lambda_1": 0.59,
+              "relative_error": 0.0
+            },
+            {
+              "nu": 10.0,
+              "lambda_1": 0.59,
+              "relative_error": 0.0
+            },
+            {
+              "nu": 100.0,
+              "lambda_1": 0.59,
+              "relative_error": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "test": "poincare_interval_verification",
+      "passed": true,
+      "results": [
+        {
+          "alpha": 0.51,
+          "spectral_gap": 0.51,
+          "poincare_const": 1.9607843137254901,
+          "is_positive": true
+        },
+        {
+          "alpha": 0.55,
+          "spectral_gap": 0.55,
+          "poincare_const": 1.8181818181818181,
+          "is_positive": true
+        },
+        {
+          "alpha": 0.59,
+          "spectral_gap": 0.59,
+          "poincare_const": 1.694915254237288,
+          "is_positive": true
+        }
+      ]
+    },
+    {
+      "test": "super_exponential_decay",
+      "passed": "True",
+      "final_bound": 0.0,
+      "alpha": 0.55
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "total": 7
+  }
+}
